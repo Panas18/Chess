@@ -1,5 +1,5 @@
 const TOTAL_SQ_NUM = 120
-const PLAY_SQ_NUM = 64
+const BOARD_SQ_NUM = 64
 
 const FILE_ARRAY = Array(TOTAL_SQ_NUM)
 const RANK_ARRAY = Array(TOTAL_SQ_NUM)
@@ -19,6 +19,21 @@ const PIECES = {
   bR: 10,
   bQ: 11,
   bK: 12,
+}
+const PIECES_VALUE = {
+  EMPTY: 0,
+  wP: 100,
+  wN: 300,
+  wB: 300,
+  wR: 500,
+  wQ: 900,
+  wK: 1000,
+  bP: 100,
+  bN: 300,
+  bB: 300,
+  bR: 500,
+  bQ: 900,
+  bK: 1000,
 }
 
 //File value of the chess board

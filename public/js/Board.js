@@ -1,12 +1,16 @@
 export default class Board {
   constructor() {
     this.element = document.querySelector('#chess--board')
-    this.drawBoard()
+    this.squares = Array(TOTAL_SQ_NUM)
+    this.boardIndex = gen64arrayIndex()
+    this.initFileRank()
     this.initBoard()
+    this.drawBoard()
+    this.printBoard()
   }
 
   drawBoard() {
-    for (let i = 0; i < PLAY_SQ_NUM; i++) {
+    for (let i = 0; i < BOARD_SQ_NUM; i++) {
       let rank = 8 - Math.floor(i / 8)
       let fileNum = (i % 8) + 1
       let color =
@@ -19,7 +23,7 @@ export default class Board {
     }
   }
 
-  initBoard() {
+  initFileRank() {
     for (let i = 0; i < TOTAL_SQ_NUM; i++) {
       FILE_ARRAY[i] = SQUARES.OFFBOARD
       RANK_ARRAY[i] = SQUARES.OFFBOARD
@@ -31,6 +35,29 @@ export default class Board {
         RANK_ARRAY[sq] = rank
       }
     }
+  }
+
+  initBoard() {
+    // make every squares value as offboard value
+    for (let i = 0; i < this.squares.length; i++) {
+      this.squares[i] = SQUARES.OFFBOARD
+    }
+
+    //make board squares empty at first
+    for (let i = 1; i <= BOARD_SQ_NUM; i++) {
+      this.squares[i] = PIECES.EMPTY
+    }
+  }
+
+  printBoard() {
+    let line = ''
+    for (let i = 1; i <= BOARD_SQ_NUM; i++) {
+      line += this.squares[i] + '     '
+
+      // break line after 8 column
+      if (i % 8 === 0) line += '\n'
+    }
+    console.log(line)
   }
 }
 
