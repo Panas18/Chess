@@ -4,13 +4,14 @@ const BOARD_SQ_NUM = 64
 const FILE_ARRAY = Array(TOTAL_SQ_NUM)
 const RANK_ARRAY = Array(TOTAL_SQ_NUM)
 
-const STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e6'
-const CASTEL_PERMISSION = {
-  WKCA: 1,
-  WQCA: 2,
-  BKCA: 4,
-  BQCA: 8,
+const STARTING_POSITION = 'rnbqkbnr/1ppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -'
+const CASTLE_PERM = {
+  WKCA: false,
+  WQCA: false,
+  BKCA: false,
+  BQCA: false,
 }
+const CASTLE_CHAR = ['K', 'Q', 'k', 'q']
 
 const COLOR = {
   WHITE: 0,
@@ -33,21 +34,25 @@ const PIECES = {
   bQ: 11,
   bK: 12,
 }
-const PIECES_VALUE = {
-  EMPTY: 0,
-  wP: 100,
-  wN: 300,
-  wB: 300,
-  wR: 500,
-  wQ: 900,
-  wK: 1000,
-  bP: 100,
-  bN: 300,
-  bB: 300,
-  bR: 500,
-  bQ: 900,
-  bK: 1000,
-}
+const PIECE_CHAR = '.PNBRQKpnbrqk'
+const RANK_CHAR = '12345678'
+const FILE_CHAR = 'abcdefgh'
+const side = 'wbN'
+const PIECES_VALUE = [
+  0,
+  100,
+  300,
+  300,
+  500,
+  900,
+  1000,
+  100,
+  300,
+  300,
+  500,
+  900,
+  1000,
+]
 
 //File value of the chess board
 const FILE = {
