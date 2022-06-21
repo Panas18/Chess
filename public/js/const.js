@@ -3,6 +3,7 @@ const BOARD_SQ_NUM = 64
 
 const FILE_ARRAY = Array(TOTAL_SQ_NUM)
 const RANK_ARRAY = Array(TOTAL_SQ_NUM)
+const STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'
 
 //value of each chess pieces on the board
 const PIECES = {

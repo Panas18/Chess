@@ -18,3 +18,4 @@ function gen64arrayIndex() {
   }
   return board64Array
 }
+
