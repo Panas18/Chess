@@ -1,12 +1,16 @@
 export default class Board {
   constructor() {
-    this.element = document.querySelector('#chess--board')
+    this.castelPermission = 0
+    this.enPassant = 0
+    this.sideToPlay = COLOR.NONE
     this.squares = Array(TOTAL_SQ_NUM)
     this.boardIndex = gen64arrayIndex()
+    this.parseFEN(STARTING_POSITION)
+
+    this.element = document.querySelector('#chess--board')
     this.initFileRank()
     this.initBoard()
     this.drawBoard()
-    this.parseFEN(STARTING_POSITION)
     this.printBoard()
   }
 
@@ -48,9 +52,6 @@ export default class Board {
     this.boardIndex.forEach((index) => {
       this.squares[index] = PIECES.EMPTY
     })
-    // this.squares.forEach(square =>{
-    //   console.log(square)
-    // })
   }
 
   printBoard() {
@@ -70,8 +71,8 @@ export default class Board {
     let index = 0
     let fenIndex = 0
     while (index < 64 && fenIndex <= fenString.length) {
-      console.log(index, fenIndex)
-      switch ([...fenString][fenIndex]) {
+      let switchValue = [...fenString][fenIndex]
+      switch (switchValue) {
         //black pieces
         case 'r':
           this.squares[this.boardIndex[index]] = PIECES.bR
@@ -110,6 +111,7 @@ export default class Board {
         case 'P':
           this.squares[this.boardIndex[index]] = PIECES.wP
           break
+        // spaces between pieces
         case '1':
         case '2':
         case '3':
@@ -118,18 +120,49 @@ export default class Board {
         case '6':
         case '7':
         case '8':
-          index += +[...fenString][fenIndex] - 1
-          console.log([...fenString][fenIndex])
+          index += +switchValue - 1 // make empty space for next switchvalue squares
           break
         case '/':
+        case ' ':
           index -= 1
           break
-
-        // default:
-        //   console.log('fen ERRor')
+        default:
+          console.log('Invalid FEN string')
+          break
       }
       index += 1
       fenIndex += 1
+    } // end of while loop
+    fenIndex += 1 //move fen index one index forward to the  side indicator
+    this.sidePlay =
+      fenString[fenIndex] === 'w'
+        ? (this.sideToPlay = COLOR.WHITE)
+        : (this.sideToPlay = COLOR.BLACK)
+
+    fenIndex += 2 //move fen index two index forward to the  castle bit indicator
+
+    for (let i = 0; i < 4; i++) {
+      if (fenString[fenIndex] == ' ') {
+        break
+      }
+      switch (fenString[fenIndex]) {
+        case 'K':
+          this.castelPermission |= CASTEL_PERMISSION.WKCA
+        case 'Q':
+          this.castelPermission |= CASTEL_PERMISSION.WQCA
+        case 'k':
+          this.castelPermission |= CASTEL_PERMISSION.BKCA
+        case 'q':
+          this.castelPermission |= CASTEL_PERMISSION.BQCA
+      }
+      fenIndex += 1
+    }
+    fenIndex += 1
+    if (fenString[fenIndex] != '-') {
+      let file = fenString[fenIndex]
+      let rank = fenString[fenIndex + 1]
+      let key = file + rank
+      this.enPassant = SQUARES[key]
     }
   }
 }
