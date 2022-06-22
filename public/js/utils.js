@@ -10,7 +10,7 @@ function FR2SQ(file, rank) {
  */
 function gen64arrayIndex() {
   board64Array = []
-  for (let rank = RANK.RANK_1; rank <= RANK.RANK_8; rank++) {
+  for (let rank = RANK.RANK_8; rank >= RANK.RANK_1; rank--) {
     for (let file = FILE.FILE_A; file <= FILE.FILE_H; file++) {
       let sq = FR2SQ(file, rank)
       board64Array.push(sq)
