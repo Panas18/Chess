@@ -231,6 +231,24 @@ export default class Board {
     })
     console.log(PIECE_LIST)
   }
+
+
+  getPiecesOnBoard() {
+    Object.entries(PIECE_LIST).forEach((key) => {
+      key[1].forEach(coord => {
+        let imageUrl = `url('./images/${key[0]}.png')`
+        console.log(imageUrl)
+        let square = document.getElementById(coord)
+        square.style.backgroundImage = imageUrl
+        square.style.backgroundRepeat = "no-repeat"
+        square.style.backgroundSize = "40px 40px"
+
+        // let sq = document.querySelector("")
+      })
+      console.log("")
+    }
+    )
+  }
 }
 
 class Square {
@@ -244,6 +262,5 @@ class Square {
 
     // this.element.style.backgroundImage = "url('./images/bB.png')"
     // this.element.style.backgroundRepeat = "no-repeat"
-    // this.element.style.backgroundSize = "40px 40px"
   }
 }
