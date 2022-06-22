@@ -3,8 +3,10 @@ const BOARD_SQ_NUM = 64
 
 const FILE_ARRAY = Array(TOTAL_SQ_NUM)
 const RANK_ARRAY = Array(TOTAL_SQ_NUM)
+const SECONDRANK_START = 31
+const SECONDRANK_END = 38
 
-const STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -'
+const STARTING_POSITION = 'r1bqk2r/pppp1ppp/2n2n2/2b5/2BpP3/2P2N2/PP3PPP/RNBQK2R w KQkq - 0 6'
 const CASTLE_PERM = {
   WKCA: false, WQCA: false, BKCA: false, BQCA: false,
 }
@@ -17,9 +19,14 @@ const COLOR = {
 const PIECES = {
   EMPTY: 0, wP: 1, wN: 2, wB: 3, wR: 4, wQ: 5, wK: 6, bP: 7, bN: 8, bB: 9, bR: 10, bQ: 11, bK: 12,
 }
+const PIECES_COLOR = [COLOR.NONE, COLOR.WHITE, COLOR.WHITE, COLOR.WHITE, COLOR.WHITE, COLOR.WHITE, COLOR.WHITE,
+COLOR.BLACK, COLOR.BLACK, COLOR.BLACK, COLOR.BLACK, COLOR.BLACK, COLOR.BLACK
+]
 
-const PIECE_LIST  = {
- wP: [], wN: [], wB: [], wR: [], wQ: [], wK: [], bP: [], bN: [], bB: [], bR: [], bQ: [], bK: [],
+const MOVELIST = {}
+
+const PIECE_LIST = {
+  wP: [], wN: [], wB: [], wR: [], wQ: [], wK: [], bP: [], bN: [], bB: [], bR: [], bQ: [], bK: [],
 
 }
 const PIECE_CHAR = '.PNBRQKpnbrqk'

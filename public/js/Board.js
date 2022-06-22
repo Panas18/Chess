@@ -1,6 +1,7 @@
 export default class Board {
   constructor() {
     this.enPassant = 0;
+    this.capture = false;
     this.sideToPlay = COLOR.NONE;
     this.squares = Array(TOTAL_SQ_NUM);
     this.boardIndex = gen64arrayIndex();
@@ -237,18 +238,39 @@ export default class Board {
     Object.entries(PIECE_LIST).forEach((key) => {
       key[1].forEach(coord => {
         let imageUrl = `url('./images/${key[0]}.png')`
-        console.log(imageUrl)
         let square = document.getElementById(coord)
         square.style.backgroundImage = imageUrl
         square.style.backgroundRepeat = "no-repeat"
         square.style.backgroundSize = "40px 40px"
-
-        // let sq = document.querySelector("")
       })
-      console.log("")
     }
     )
   }
+
+  resetSqColor() {
+    const lightSquares = document.getElementsByClassName("square light")
+    for (let i = 0; i < lightSquares.length; i++) {
+      lightSquares[i].style.backgroundColor = "#EFEFD2"
+    }
+    const darkSquares = document.getElementsByClassName("square dark")
+    for (let i = 0; i < lightSquares.length; i++) {
+      darkSquares[i].style.backgroundColor = "#779756"
+    }
+
+  }
+
+  visaualizeLegalMove(board) {
+    this.element.addEventListener("click", function (event) {
+      board.resetSqColor()
+      const fromSquare = event.target.id
+      const toSquares = MOVELIST[fromSquare]
+      toSquares.forEach(toSquare => {
+        const toMoveSq = document.getElementById(toSquare)
+        toMoveSq.style.backgroundColor = "red"
+      })
+    })
+  }
+
 }
 
 class Square {
@@ -259,8 +281,5 @@ class Square {
     this.element.setAttribute("file", file);
     this.element.classList.add(color);
     this.element.setAttribute("id", square);
-
-    // this.element.style.backgroundImage = "url('./images/bB.png')"
-    // this.element.style.backgroundRepeat = "no-repeat"
   }
 }

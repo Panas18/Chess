@@ -1,5 +1,5 @@
 #chess-container {
-  outline: 1px solid red;
+  outline: 2px solid rgb(17, 16, 16);
   width: 90vmin;
   height: 90vmin;
 }
