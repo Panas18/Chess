@@ -1,7 +1,9 @@
 function genLegalMove(board) {
-  //generate white pawn moves
   if (board.sideToPlay === COLOR.WHITE) {
     whitePawnMovesGen(board);
+  }
+  if (board.sideToPlay === COLOR.BLACK) {
+    blackPawnMovesGen(board);
   }
   knightMovesGen(board)
 
@@ -43,7 +45,7 @@ function whitePawnMovesGen(board) {
       nextPosns.push(nextPosn);
     }
 
-    if (currentPosn >= SECONDRANK_START && currentPosn <= SECONDRANK_END) {
+    if (currentPosn >= SQUARES.a2 && currentPosn <= SQUARES.h2) {
       nextPosn = currentPosn + 20;
       if (
         board.squares[nextPosn] === PIECES.EMPTY &&
@@ -58,6 +60,42 @@ function whitePawnMovesGen(board) {
     capPositions.forEach((capPosn) => {
       if (
         PIECES_COLOR[board.squares[capPosn]] === COLOR.BLACK &&
+        board.squares[nextPosn] !== SQUARES.OFFBOARD
+      ) {
+        nextPosns.push(capPosn);
+      }
+    });
+    MOVELIST[currentPosn] = nextPosns;
+  });
+}
+
+function blackPawnMovesGen(board) {
+  const pawnPosn = PIECE_LIST["bP"];
+  pawnPosn.forEach((currentPosn) => {
+    const nextPosns = [];
+    nextPosn = currentPosn - 10;
+    if (
+      board.squares[nextPosn] === PIECES.EMPTY &&
+      board.squares[nextPosn] !== SQUARES.OFFBOARD
+    ) {
+      nextPosns.push(nextPosn);
+    }
+
+    if (currentPosn >= SQUARES.a7 && currentPosn <= SQUARES.h7) {
+      nextPosn = currentPosn - 20;
+      if (
+        board.squares[nextPosn] === PIECES.EMPTY &&
+        board.squares[nextPosn + 10] === PIECES.EMPTY
+      ) {
+        nextPosns.push(nextPosn);
+      }
+    }
+
+    // capture squares
+    capPositions = [currentPosn - 11, currentPosn - 9];
+    capPositions.forEach((capPosn) => {
+      if (
+        PIECES_COLOR[board.squares[capPosn]] === COLOR.WHITE &&
         board.squares[nextPosn] !== SQUARES.OFFBOARD
       ) {
         nextPosns.push(capPosn);

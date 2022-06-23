@@ -6,7 +6,7 @@ const RANK_ARRAY = Array(TOTAL_SQ_NUM)
 const SECONDRANK_START = 31
 const SECONDRANK_END = 38
 
-const STARTING_POSITION = 'r1bqkb1r/pppp1ppp/2n2n2/4p1N1/2B1P3/8/PPPP1PPP/RNBQK2R b KQkq - 5 4'
+const STARTING_POSITION = 'r1bqk2r/pppp1ppp/2n2n2/2b1p3/2BPP3/2N2N2/PPP2PPP/R1BQK2R b KQkq - 2 5'
 const CASTLE_PERM = {
   WKCA: false, WQCA: false, BKCA: false, BQCA: false,
 }
