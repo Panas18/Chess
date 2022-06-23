@@ -1,4 +1,5 @@
 function genLegalMove(board) {
+  resetMoveList()
   if (board.sideToPlay === COLOR.WHITE) {
     whitePawnMovesGen(board);
   }
@@ -10,6 +11,11 @@ function genLegalMove(board) {
   rookMovesGen(board);
   queenMovesGen(board)
   kingMovesGen(board)
+}
+function resetMoveList() {
+  for (const key in MOVELIST) {
+    MOVELIST[key] = []
+  }
 }
 
 function whitePawnMovesGen(board) {

@@ -2,14 +2,17 @@ export default class Board {
   constructor() {
     this.enPassant = 0;
     this.capture = false;
+    this.clicked = false
+    this.toSquare = 0
+    this.fromSquare = 0
     this.sideToPlay = COLOR.NONE;
     this.squares = Array(TOTAL_SQ_NUM);
     this.boardIndex = gen64arrayIndex();
     this.element = document.querySelector("#chess--board");
     this.initFileRank();
     this.initBoard();
-    this.drawBoard();
     this.parseFEN(STARTING_POSITION);
+    this.drawBoard();
     this.genPieceList()
     this.printBoard();
   }
@@ -71,7 +74,7 @@ export default class Board {
     console.log("");
     console.log(line);
 
-    console.log("To Play: " + side[this.sidePlay]);
+    console.log("To Play: " + side[this.sideToPlay]);
     let enPassantChar = Object.keys(SQUARES).find(
       (k) => SQUARES[k] === this.enPassant,
     );
@@ -187,6 +190,22 @@ export default class Board {
     }
   }
 
+  resetPieceList() {
+
+    PIECE_LIST["wP"] = []
+    PIECE_LIST["wN"] = []
+    PIECE_LIST["wB"] = []
+    PIECE_LIST["wR"] = []
+    PIECE_LIST["wQ"] = []
+    PIECE_LIST["wK"] = []
+    PIECE_LIST["bP"] = []
+    PIECE_LIST["bN"] = []
+    PIECE_LIST["bB"] = []
+    PIECE_LIST["bR"] = []
+    PIECE_LIST["bQ"] = []
+    PIECE_LIST["bK"] = []
+  }
+
   genPieceList() {
     this.boardIndex.forEach(index => {
       switch (this.squares[index]) {
@@ -230,11 +249,16 @@ export default class Board {
           break
       }
     })
+    console.log("Piece list")
     console.log(PIECE_LIST)
   }
 
 
   getPiecesOnBoard() {
+    const squares = document.getElementsByClassName("square")
+    for (let i = 0; i < squares.length; i++) {
+      squares[i].style.backgroundImage = ""
+    }
     Object.entries(PIECE_LIST).forEach((key) => {
       key[1].forEach(coord => {
         let imageUrl = `url('./images/${key[0]}.png')`
@@ -259,19 +283,48 @@ export default class Board {
 
   }
 
+
   visaualizeLegalMove(board) {
+    this.resetSqColor()
     this.element.addEventListener("click", function (event) {
-      board.resetSqColor()
-      const fromSquare = event.target.id
-      const toSquares = MOVELIST[fromSquare]
-      const fromMOveSq = document.getElementById(fromSquare)
-      fromMOveSq.style.backgroundColor = "#0d7c15"
-      toSquares.forEach(toSquare => {
-        const toMoveSq = document.getElementById(toSquare)
-        toMoveSq.style.backgroundColor = "#1ff95e"
-      })
+      if (!this.clicked) {
+        this.clicked = !this.clicked
+        board.resetSqColor()
+        board.fromSquare = event.target.id
+        board.toSquares = MOVELIST[board.fromSquare]
+        const fromMOveSq = document.getElementById(board.fromSquare)
+        fromMOveSq.style.backgroundColor = "#0d7c15"
+        board.toSquares.forEach(toSquare => {
+          const toMoveSq = document.getElementById(toSquare)
+          toMoveSq.style.backgroundColor = "#1ff95e"
+        })
+      } else {
+        this.clicked = !this.clicked
+        const piece = board.squares[board.fromSquare]
+        const moveTo = event.target.id
+        if (Object.values(board.toSquares).includes(parseInt(moveTo))) {
+          board.squares[moveTo] = piece
+          board.squares[board.fromSquare] = PIECES.EMPTY
+        }
+        board.sideToPlay = 1 - board.sideToPlay
+        console.log(board.sideToPlay)
+        board.printBoard()
+        board.resetPieceList()
+        board.genPieceList()
+        board.getPiecesOnBoard()
+        board.resetSqColor()
+        genLegalMove(board)
+      }
+
     })
   }
+
+  // movePieces(board) {
+  //   this.element.addEventListener("click", function () {
+  //     const piece = board.squares[board.fromSquare]
+  //     console.log(piece)
+  //   })
+  // }
 
 }
 
