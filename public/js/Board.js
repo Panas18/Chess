@@ -264,6 +264,8 @@ export default class Board {
       board.resetSqColor()
       const fromSquare = event.target.id
       const toSquares = MOVELIST[fromSquare]
+      const fromMOveSq = document.getElementById(fromSquare)
+      fromMOveSq.style.backgroundColor = "#0d7c15"
       toSquares.forEach(toSquare => {
         const toMoveSq = document.getElementById(toSquare)
         toMoveSq.style.backgroundColor = "#1ff95e"
