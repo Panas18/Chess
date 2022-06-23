@@ -266,7 +266,7 @@ export default class Board {
       const toSquares = MOVELIST[fromSquare]
       toSquares.forEach(toSquare => {
         const toMoveSq = document.getElementById(toSquare)
-        toMoveSq.style.backgroundColor = "red"
+        toMoveSq.style.backgroundColor = "#1ff95e"
       })
     })
   }

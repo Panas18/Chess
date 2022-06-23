@@ -6,7 +6,7 @@ const RANK_ARRAY = Array(TOTAL_SQ_NUM)
 const SECONDRANK_START = 31
 const SECONDRANK_END = 38
 
-const STARTING_POSITION = 'r1bqk2r/pppp1ppp/2n2n2/2b5/2BpP3/2P2N2/PP3PPP/RNBQK2R w KQkq - 0 6'
+const STARTING_POSITION = 'r1bqkb1r/pppp1ppp/2n2n2/4p1N1/2B1P3/8/PPPP1PPP/RNBQK2R b KQkq - 5 4'
 const CASTLE_PERM = {
   WKCA: false, WQCA: false, BKCA: false, BQCA: false,
 }
@@ -42,6 +42,8 @@ const FILE = {
   FILE_A: 0, FILE_B: 1, FILE_C: 2, FILE_D: 3, FILE_E: 4, FILE_F: 5, FILE_G: 6, FILE_H: 7,
   FILE_OUT: 8,
 }
+
+const KNIGHT_MOVES = [21, 19, 12, 8, -21, -19, -12, -8]
 
 //rank value of the chess board
 const RANK = {
