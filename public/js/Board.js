@@ -3,6 +3,7 @@ export default class Board {
     this.enPassant = 0;
     this.capture = false;
     this.clicked = false
+    this.check = false
     this.toSquare = 0
     this.fromSquare = 0
     this.sideToPlay = COLOR.NONE;
@@ -192,18 +193,22 @@ export default class Board {
 
   resetPieceList() {
 
-    PIECE_LIST["wP"] = []
-    PIECE_LIST["wN"] = []
-    PIECE_LIST["wB"] = []
-    PIECE_LIST["wR"] = []
-    PIECE_LIST["wQ"] = []
-    PIECE_LIST["wK"] = []
-    PIECE_LIST["bP"] = []
-    PIECE_LIST["bN"] = []
-    PIECE_LIST["bB"] = []
-    PIECE_LIST["bR"] = []
-    PIECE_LIST["bQ"] = []
-    PIECE_LIST["bK"] = []
+    // PIECE_LIST["wP"] = []
+    // PIECE_LIST["wN"] = []
+    // PIECE_LIST["wB"] = []
+    // PIECE_LIST["wR"] = []
+    // PIECE_LIST["wQ"] = []
+    // PIECE_LIST["wK"] = []
+    // PIECE_LIST["bP"] = []
+    // PIECE_LIST["bN"] = []
+    // PIECE_LIST["bB"] = []
+    // PIECE_LIST["bR"] = []
+    // PIECE_LIST["bQ"] = []
+    // PIECE_LIST["bK"] = []
+
+    for (const key in PIECE_LIST) {
+      PIECE_LIST[key] = []
+    }
   }
 
   genPieceList() {
@@ -249,8 +254,8 @@ export default class Board {
           break
       }
     })
-    console.log("Piece list")
-    console.log(PIECE_LIST)
+    // console.log("Piece list")
+    // console.log(PIECE_LIST)
   }
 
 
@@ -305,27 +310,23 @@ export default class Board {
         if (Object.values(board.toSquares).includes(parseInt(moveTo))) {
           board.squares[moveTo] = piece
           board.squares[board.fromSquare] = PIECES.EMPTY
-        }
-        board.sideToPlay = 1 - board.sideToPlay
-        console.log(board.sideToPlay)
-        board.printBoard()
-        board.resetPieceList()
-        board.genPieceList()
-        board.getPiecesOnBoard()
-        board.resetSqColor()
-        genLegalMove(board)
-      }
 
+          board.resetPieceList()
+          board.genPieceList()
+          board.getPiecesOnBoard()
+          board.resetSqColor()
+
+          opponentKingCheck(board)
+          board.printBoard()
+
+          //generate moves for opponent
+          board.sideToPlay = 1 - board.sideToPlay
+          genLegalMove(board)
+
+        }
+      }
     })
   }
-
-  // movePieces(board) {
-  //   this.element.addEventListener("click", function () {
-  //     const piece = board.squares[board.fromSquare]
-  //     console.log(piece)
-  //   })
-  // }
-
 }
 
 class Square {

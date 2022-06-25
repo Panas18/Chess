@@ -1,20 +1,21 @@
-function genLegalMove(board) {
-  resetMoveList()
+function genLegalMove(board, prevLegalMove) {
+  resetMoveList();
   if (board.sideToPlay === COLOR.WHITE) {
     whitePawnMovesGen(board);
   }
   if (board.sideToPlay === COLOR.BLACK) {
     blackPawnMovesGen(board);
   }
-  knightMovesGen(board);
+  knightMovesGen(board, prevLegalMove);
   bishopMovesGen(board);
   rookMovesGen(board);
-  queenMovesGen(board)
-  kingMovesGen(board)
+  queenMovesGen(board);
+  kingMovesGen(board);
+  // console.log(MOVELIST)
 }
 function resetMoveList() {
   for (const key in MOVELIST) {
-    MOVELIST[key] = []
+    MOVELIST[key] = [];
   }
 }
 
@@ -23,7 +24,7 @@ function whitePawnMovesGen(board) {
 
   pawnPosn.forEach((currentPosn) => {
     const nextPosns = [];
-    nextPosn = currentPosn + 10;
+    let nextPosn = currentPosn + 10;
     if (
       board.squares[nextPosn] === PIECES.EMPTY &&
       board.squares[nextPosn] !== SQUARES.OFFBOARD
@@ -91,24 +92,24 @@ function blackPawnMovesGen(board) {
   });
 }
 
-function knightMovesGen(board) {
+function knightMovesGen(board, opponentMoveList, squaresCopy) {
   const knightPosns =
     board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wN"] : PIECE_LIST["bN"];
-  // console.log(KnightPosns)
-  // Knight Movement
   knightPosns.forEach((currentPosn) => {
     const nextPosns = [];
     KNIGHT_MOVES.forEach((knightMove) => {
       nextPosn = currentPosn + knightMove;
-      // console.log(board.squares[nextPosn])
       if (
         PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay &&
         board.squares[nextPosn] !== SQUARES.OFFBOARD
       ) {
+        console.log(
+          selfKingCheck(squaresCopy, opponentMoveList, currentPosn, nextPosn),
+        );
+        // console.log("not check in " + nextPosn)
         nextPosns.push(nextPosn);
       }
     });
-    // console.log(nextPosns)
     MOVELIST[currentPosn] = nextPosns;
   });
 }
@@ -132,7 +133,7 @@ function bishopMovesGen(board) {
         // if (PIECES_COLOR[board.squares[nextPosn]] !== board.sidetoplay) {
         // }
         if (PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay) {
-          nextPosns.push(nextPosn)
+          nextPosns.push(nextPosn);
         }
       }
     }
@@ -157,7 +158,7 @@ function rookMovesGen(board) {
       }
       if (board.squares[nextPosn] !== SQUARES.OFFBOARD) {
         if (PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay) {
-          nextPosns.push(nextPosn)
+          nextPosns.push(nextPosn);
         }
       }
     }
@@ -170,7 +171,6 @@ function queenMovesGen(board) {
     board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wQ"] : PIECE_LIST["bQ"];
   queenPosns.forEach((currentPosn) => {
     const nextPosns = [];
-    // console.log(currentPosn)
     for (let i = 0; i < QUEEN_MOVES.length; i++) {
       nextPosn = currentPosn + QUEEN_MOVES[i];
       while (
@@ -182,7 +182,7 @@ function queenMovesGen(board) {
       }
       if (board.squares[nextPosn] !== SQUARES.OFFBOARD) {
         if (PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay) {
-          nextPosns.push(nextPosn)
+          nextPosns.push(nextPosn);
         }
       }
     }
@@ -193,13 +193,10 @@ function queenMovesGen(board) {
 function kingMovesGen(board) {
   const kingPosns =
     board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wK"] : PIECE_LIST["bK"];
-  // console.log(KnightPosns)
-  // Knight Movement
   kingPosns.forEach((currentPosn) => {
     const nextPosns = [];
     QUEEN_MOVES.forEach((kingMove) => {
       nextPosn = currentPosn + kingMove;
-      // console.log(board.squares[nextPosn])
       if (
         PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay &&
         board.squares[nextPosn] !== SQUARES.OFFBOARD
@@ -207,7 +204,63 @@ function kingMovesGen(board) {
         nextPosns.push(nextPosn);
       }
     });
-    // console.log(nextPosns)
+    MOVELIST[currentPosn] = nextPosns;
+  });
+}
+
+function opponentKingCheck(board) {
+  board.resetPieceList();
+  board.genPieceList();
+  genLegalMove(board);
+  const kingPosn =
+    board.sideToPlay == COLOR.WHITE ? PIECE_LIST["bK"] : PIECE_LIST["wK"];
+  for (const key in MOVELIST) {
+    const moveLists = MOVELIST[key];
+    moveLists.forEach((moveList) => {
+
+      if (moveList === parseInt(kingPosn)) {
+        console.log("check");
+      }
+    });
+  }
+}
+
+// function selfKingCheck(board, currentPosn, nextPosn) {
+//   const piece = board.squares[currentPosn];
+//   board.squares[nextPosn] = piece;
+//   board.squares[currentPosn] = PIECES.EMPTY;
+//   const kingPosn =
+//     parseInt(board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wK"] : PIECE_LIST["bK"]);
+//   board.sideToPlay = 1 - board.sideToPlay
+//   genLegalMove(board)
+//   board.sideToPlay = 1 - board.sideToPlay
+//   // for (const key in prevLegalMove) {
+//   //   const moveLists = prevLegalMove[key];
+//   //   moveLists.forEach((moveList) => {
+//   //     if (moveList === kingPosn) {
+//   //       console.log(nextPosn)
+//   //     }
+//   //   });
+//   // }
+// }
+
+function knightMovesGen(board, prevLegalMove) {
+  const knightPosns =
+    board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wN"] : PIECE_LIST["bN"];
+  knightPosns.forEach((currentPosn) => {
+    const nextPosns = [];
+    KNIGHT_MOVES.forEach((knightMove) => {
+      nextPosn = currentPosn + knightMove;
+      if (
+        PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay &&
+        board.squares[nextPosn] !== SQUARES.OFFBOARD
+      ) {
+        // let tempSquare = [...board.squares];
+        // selfKingCheck(board, currentPosn, nextPosn, prevLegalMove);
+        nextPosns.push(nextPosn);
+        // board.squares = tempSquare;
+      }
+    });
     MOVELIST[currentPosn] = nextPosns;
   });
 }
