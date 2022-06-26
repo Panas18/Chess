@@ -298,10 +298,34 @@ export default class Board {
           board.getPiecesOnBoard();
           board.resetSqColor();
 
-          //generate moves for opponent
+          //opponent move
           board.sideToPlay = 1 - board.sideToPlay;
-          board.printBoard();
           genLegalMove(board);
+
+          //check if piecemove leads to check
+          const selfMoveList = { ...MOVELIST }
+
+          for (const key in selfMoveList) {
+            selfMoveList[key].forEach(toSquare => {
+              let selfPiece = board.squares[key]
+              let toSquarePiece = board.squares[toSquare]
+              board.squares[toSquare] = selfPiece;
+              board.squares[key] = PIECES.EMPTY;
+
+              board.sideToPlay = 1 - board.sideToPlay
+              genLegalMove(board);
+              opponentKingCheck(board, toSquare, key, selfMoveList)
+              board.squares[toSquare] = toSquarePiece;
+              board.squares[key] = selfPiece;
+              board.sideToPlay = 1 - board.sideToPlay
+
+            });
+          }
+
+          board.printBoard();
+          board.resetPieceList();
+          board.genPieceList();
+          MOVELIST = selfMoveList
         }
       }
     });

@@ -21,7 +21,7 @@ const PIECES_COLOR = [COLOR.NONE, COLOR.WHITE, COLOR.WHITE, COLOR.WHITE, COLOR.W
 COLOR.BLACK, COLOR.BLACK, COLOR.BLACK, COLOR.BLACK, COLOR.BLACK, COLOR.BLACK
 ]
 
-const MOVELIST = {}
+var MOVELIST = {}
 
 const PIECE_LIST = {
   wP: [], wN: [], wB: [], wR: [], wQ: [], wK: [], bP: [], bN: [], bB: [], bR: [], bQ: [], bK: [],

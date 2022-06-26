@@ -1,4 +1,4 @@
-function genLegalMove(board, prevLegalMove) {
+function genLegalMove(board, movelist) {
   resetMoveList();
   if (board.sideToPlay === COLOR.WHITE) {
     whitePawnMovesGen(board);
@@ -6,13 +6,14 @@ function genLegalMove(board, prevLegalMove) {
   if (board.sideToPlay === COLOR.BLACK) {
     blackPawnMovesGen(board);
   }
-  knightMovesGen(board, prevLegalMove);
+  knightMovesGen(board, movelist);
   bishopMovesGen(board);
   rookMovesGen(board);
   queenMovesGen(board);
   kingMovesGen(board);
   // console.log(MOVELIST)
 }
+
 function resetMoveList() {
   for (const key in MOVELIST) {
     MOVELIST[key] = [];
@@ -92,27 +93,27 @@ function blackPawnMovesGen(board) {
   });
 }
 
-function knightMovesGen(board, opponentMoveList, squaresCopy) {
-  const knightPosns =
-    board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wN"] : PIECE_LIST["bN"];
-  knightPosns.forEach((currentPosn) => {
-    const nextPosns = [];
-    KNIGHT_MOVES.forEach((knightMove) => {
-      nextPosn = currentPosn + knightMove;
-      if (
-        PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay &&
-        board.squares[nextPosn] !== SQUARES.OFFBOARD
-      ) {
-        console.log(
-          selfKingCheck(squaresCopy, opponentMoveList, currentPosn, nextPosn),
-        );
-        // console.log("not check in " + nextPosn)
-        nextPosns.push(nextPosn);
-      }
-    });
-    MOVELIST[currentPosn] = nextPosns;
-  });
-}
+// function knightMovesGen(board, opponentMoveList, squaresCopy) {
+//   const knightPosns =
+//     board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wN"] : PIECE_LIST["bN"];
+//   knightPosns.forEach((currentPosn) => {
+//     const nextPosns = [];
+//     KNIGHT_MOVES.forEach((knightMove) => {
+//       nextPosn = currentPosn + knightMove;
+//       if (
+//         PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay &&
+//         board.squares[nextPosn] !== SQUARES.OFFBOARD
+//       ) {
+//         console.log(
+//           selfKingCheck(squaresCopy, opponentMoveList, currentPosn, nextPosn),
+//         );
+//         // console.log("not check in " + nextPosn)
+//         nextPosns.push(nextPosn);
+//       }
+//     });
+//     MOVELIST[currentPosn] = nextPosns;
+//   });
+// }
 
 function bishopMovesGen(board) {
   const bishopPosns =
@@ -205,7 +206,6 @@ function kingMovesGen(board) {
       }
     });
 
-
     ///white king castle moves gen
     if (board.sideToPlay === COLOR.WHITE) {
       if (CASTLE_PERM.WKCA) {
@@ -251,7 +251,7 @@ function kingMovesGen(board) {
   });
 }
 
-function opponentKingCheck(board) {
+function opponentKingCheck(board, toSquare, fromSquare, selfMoveList) {
   board.resetPieceList();
   board.genPieceList();
   genLegalMove(board);
@@ -260,15 +260,18 @@ function opponentKingCheck(board) {
   for (const key in MOVELIST) {
     const moveLists = MOVELIST[key];
     moveLists.forEach((moveList) => {
-      if (moveList === parseInt(kingPosn)) {
-        console.log("");
-        console.log("check");
+      if (selfMoveList !== undefined) {
+        if (moveList === parseInt(kingPosn)) {
+          // console.log(typeof (fromSquare), toSquare)
+          console.log(selfMoveList[fromSquare])
+        }
       }
     });
   }
 }
 
-function knightMovesGen(board, prevLegalMove) {
+
+function knightMovesGen(board, movelist) {
   const knightPosns =
     board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wN"] : PIECE_LIST["bN"];
   knightPosns.forEach((currentPosn) => {
@@ -279,7 +282,21 @@ function knightMovesGen(board, prevLegalMove) {
         PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay &&
         board.squares[nextPosn] !== SQUARES.OFFBOARD
       ) {
-        nextPosns.push(nextPosn);
+        if (movelist !== undefined) {
+          // const selfPiece = board.squares[currentPosn];
+          // const oppPiece = board.squares[nextPosn];
+          // board.squares[nextPosn] = selfPiece;
+          // board.squares[currentPosn] = PIECES.EMPTY;
+
+          // selfKingCheck(board, movelist, nextPosn, currentPosn);
+
+          // board.squares[nextPosn] = oppPiece
+          // board.squares[currentPosn] = selfPiece;
+
+          nextPosns.push(nextPosn);
+        } else {
+          nextPosns.push(nextPosn);
+        }
       }
     });
     MOVELIST[currentPosn] = nextPosns;
