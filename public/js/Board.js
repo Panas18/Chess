@@ -2,10 +2,10 @@ export default class Board {
   constructor() {
     this.enPassant = 0;
     this.capture = false;
-    this.clicked = false
-    this.check = false
-    this.toSquare = 0
-    this.fromSquare = 0
+    this.clicked = false;
+    this.check = false;
+    this.toSquare = 0;
+    this.fromSquare = 0;
     this.sideToPlay = COLOR.NONE;
     this.squares = Array(TOTAL_SQ_NUM);
     this.boardIndex = gen64arrayIndex();
@@ -14,7 +14,7 @@ export default class Board {
     this.initBoard();
     this.parseFEN(STARTING_POSITION);
     this.drawBoard();
-    this.genPieceList()
+    this.genPieceList();
     this.printBoard();
   }
 
@@ -192,140 +192,119 @@ export default class Board {
   }
 
   resetPieceList() {
-
-    // PIECE_LIST["wP"] = []
-    // PIECE_LIST["wN"] = []
-    // PIECE_LIST["wB"] = []
-    // PIECE_LIST["wR"] = []
-    // PIECE_LIST["wQ"] = []
-    // PIECE_LIST["wK"] = []
-    // PIECE_LIST["bP"] = []
-    // PIECE_LIST["bN"] = []
-    // PIECE_LIST["bB"] = []
-    // PIECE_LIST["bR"] = []
-    // PIECE_LIST["bQ"] = []
-    // PIECE_LIST["bK"] = []
-
     for (const key in PIECE_LIST) {
-      PIECE_LIST[key] = []
+      PIECE_LIST[key] = [];
     }
   }
 
   genPieceList() {
-    this.boardIndex.forEach(index => {
+    this.boardIndex.forEach((index) => {
       switch (this.squares[index]) {
         case 1:
-          PIECE_LIST.wP.push(index)
-          break
+          PIECE_LIST.wP.push(index);
+          break;
         case 2:
-          PIECE_LIST.wN.push(index)
-          break
+          PIECE_LIST.wN.push(index);
+          break;
         case 3:
-          PIECE_LIST.wB.push(index)
-          break
+          PIECE_LIST.wB.push(index);
+          break;
         case 4:
-          PIECE_LIST.wR.push(index)
-          break
+          PIECE_LIST.wR.push(index);
+          break;
         case 5:
-          PIECE_LIST.wQ.push(index)
-          break
+          PIECE_LIST.wQ.push(index);
+          break;
         case 6:
-          PIECE_LIST.wK.push(index)
-          break
+          PIECE_LIST.wK.push(index);
+          break;
         case 7:
-          PIECE_LIST.bP.push(index)
-          break
+          PIECE_LIST.bP.push(index);
+          break;
         case 8:
-          PIECE_LIST.bN.push(index)
-          break
+          PIECE_LIST.bN.push(index);
+          break;
         case 9:
-          PIECE_LIST.bB.push(index)
-          break
+          PIECE_LIST.bB.push(index);
+          break;
         case 10:
-          PIECE_LIST.bR.push(index)
-          break
+          PIECE_LIST.bR.push(index);
+          break;
         case 11:
-          PIECE_LIST.bQ.push(index)
-          break
+          PIECE_LIST.bQ.push(index);
+          break;
         case 12:
-          PIECE_LIST.bK.push(index)
-          break
+          PIECE_LIST.bK.push(index);
+          break;
         default:
-          break
+          break;
       }
-    })
-    // console.log("Piece list")
-    // console.log(PIECE_LIST)
+    });
   }
 
-
   getPiecesOnBoard() {
-    const squares = document.getElementsByClassName("square")
+    const squares = document.getElementsByClassName("square");
     for (let i = 0; i < squares.length; i++) {
-      squares[i].style.backgroundImage = ""
+      squares[i].style.backgroundImage = "";
     }
     Object.entries(PIECE_LIST).forEach((key) => {
-      key[1].forEach(coord => {
-        let imageUrl = `url('./images/${key[0]}.png')`
-        let square = document.getElementById(coord)
-        square.style.backgroundImage = imageUrl
-        square.style.backgroundRepeat = "no-repeat"
-        square.style.backgroundSize = "40px 40px"
-      })
-    }
-    )
+      key[1].forEach((coord) => {
+        let imageUrl = `url('./images/${key[0]}.png')`;
+        let square = document.getElementById(coord);
+        square.style.backgroundImage = imageUrl;
+        square.style.backgroundRepeat = "no-repeat";
+        square.style.backgroundSize = "40px 40px";
+      });
+    });
   }
 
   resetSqColor() {
-    const lightSquares = document.getElementsByClassName("square light")
+    const lightSquares = document.getElementsByClassName("square light");
     for (let i = 0; i < lightSquares.length; i++) {
-      lightSquares[i].style.backgroundColor = "#EFEFD2"
+      lightSquares[i].style.backgroundColor = "#EFEFD2";
     }
-    const darkSquares = document.getElementsByClassName("square dark")
+    const darkSquares = document.getElementsByClassName("square dark");
     for (let i = 0; i < lightSquares.length; i++) {
-      darkSquares[i].style.backgroundColor = "#779756"
+      darkSquares[i].style.backgroundColor = "#779756";
     }
-
   }
 
-
   visaualizeLegalMove(board) {
-    this.resetSqColor()
+    this.resetSqColor();
     this.element.addEventListener("click", function (event) {
       if (!this.clicked) {
-        this.clicked = !this.clicked
-        board.resetSqColor()
-        board.fromSquare = event.target.id
-        board.toSquares = MOVELIST[board.fromSquare]
-        const fromMOveSq = document.getElementById(board.fromSquare)
-        fromMOveSq.style.backgroundColor = "#0d7c15"
-        board.toSquares.forEach(toSquare => {
-          const toMoveSq = document.getElementById(toSquare)
-          toMoveSq.style.backgroundColor = "#1ff95e"
-        })
+        this.clicked = !this.clicked;
+        board.resetSqColor();
+        board.fromSquare = event.target.id;
+        board.toSquares = MOVELIST[board.fromSquare];
+        const fromMOveSq = document.getElementById(board.fromSquare);
+        fromMOveSq.style.backgroundColor = "#0d7c15";
+        board.toSquares.forEach((toSquare) => {
+          const toMoveSq = document.getElementById(toSquare);
+          toMoveSq.style.backgroundColor = "#1ff95e";
+        });
       } else {
-        this.clicked = !this.clicked
-        const piece = board.squares[board.fromSquare]
-        const moveTo = event.target.id
+        this.clicked = !this.clicked;
+        const piece = board.squares[board.fromSquare];
+        const moveTo = event.target.id;
         if (Object.values(board.toSquares).includes(parseInt(moveTo))) {
-          board.squares[moveTo] = piece
-          board.squares[board.fromSquare] = PIECES.EMPTY
-
-          board.resetPieceList()
-          board.genPieceList()
-          board.getPiecesOnBoard()
-          board.resetSqColor()
-
-          opponentKingCheck(board)
-          board.printBoard()
+          board.squares[moveTo] = piece;
+          board.squares[board.fromSquare] = PIECES.EMPTY;
+          castle(board, piece, moveTo);
+          checkCastlePerm(piece, board.fromSquare);
+          opponentKingCheck(board);
+          board.resetPieceList();
+          board.genPieceList();
+          board.getPiecesOnBoard();
+          board.resetSqColor();
 
           //generate moves for opponent
-          board.sideToPlay = 1 - board.sideToPlay
-          genLegalMove(board)
-
+          board.sideToPlay = 1 - board.sideToPlay;
+          board.printBoard();
+          genLegalMove(board);
         }
       }
-    })
+    });
   }
 }
 

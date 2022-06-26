@@ -204,6 +204,49 @@ function kingMovesGen(board) {
         nextPosns.push(nextPosn);
       }
     });
+
+
+    ///white king castle moves gen
+    if (board.sideToPlay === COLOR.WHITE) {
+      if (CASTLE_PERM.WKCA) {
+        if (
+          board.squares[SQUARES.f1] === PIECES.EMPTY &&
+          board.squares[SQUARES.g1] === PIECES.EMPTY
+        ) {
+          nextPosns.push(SQUARES.g1);
+        }
+      }
+      if (CASTLE_PERM.WQCA) {
+        if (
+          board.squares[SQUARES.b1] === PIECES.EMPTY &&
+          board.squares[SQUARES.c1] === PIECES.EMPTY &&
+          board.squares[SQUARES.d1] === PIECES.EMPTY
+        ) {
+          nextPosns.push(SQUARES.c1);
+        }
+      }
+    }
+
+    ///black king castle moves gen
+    if (board.sideToPlay === COLOR.BLACK) {
+      if (CASTLE_PERM.BKCA) {
+        if (
+          board.squares[SQUARES.f8] === PIECES.EMPTY &&
+          board.squares[SQUARES.g8] === PIECES.EMPTY
+        ) {
+          nextPosns.push(SQUARES.g8);
+        }
+      }
+      if (CASTLE_PERM.BQCA) {
+        if (
+          board.squares[SQUARES.b8] === PIECES.EMPTY &&
+          board.squares[SQUARES.c8] === PIECES.EMPTY &&
+          board.squares[SQUARES.d8] === PIECES.EMPTY
+        ) {
+          nextPosns.push(SQUARES.c8);
+        }
+      }
+    }
     MOVELIST[currentPosn] = nextPosns;
   });
 }
@@ -217,32 +260,13 @@ function opponentKingCheck(board) {
   for (const key in MOVELIST) {
     const moveLists = MOVELIST[key];
     moveLists.forEach((moveList) => {
-
       if (moveList === parseInt(kingPosn)) {
+        console.log("");
         console.log("check");
       }
     });
   }
 }
-
-// function selfKingCheck(board, currentPosn, nextPosn) {
-//   const piece = board.squares[currentPosn];
-//   board.squares[nextPosn] = piece;
-//   board.squares[currentPosn] = PIECES.EMPTY;
-//   const kingPosn =
-//     parseInt(board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wK"] : PIECE_LIST["bK"]);
-//   board.sideToPlay = 1 - board.sideToPlay
-//   genLegalMove(board)
-//   board.sideToPlay = 1 - board.sideToPlay
-//   // for (const key in prevLegalMove) {
-//   //   const moveLists = prevLegalMove[key];
-//   //   moveLists.forEach((moveList) => {
-//   //     if (moveList === kingPosn) {
-//   //       console.log(nextPosn)
-//   //     }
-//   //   });
-//   // }
-// }
 
 function knightMovesGen(board, prevLegalMove) {
   const knightPosns =
@@ -255,12 +279,66 @@ function knightMovesGen(board, prevLegalMove) {
         PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay &&
         board.squares[nextPosn] !== SQUARES.OFFBOARD
       ) {
-        // let tempSquare = [...board.squares];
-        // selfKingCheck(board, currentPosn, nextPosn, prevLegalMove);
         nextPosns.push(nextPosn);
-        // board.squares = tempSquare;
       }
     });
     MOVELIST[currentPosn] = nextPosns;
   });
+}
+
+function checkCastlePerm(piece, fromSquare) {
+  // white king
+  if (piece === PIECES.wK) {
+    CASTLE_PERM.WKCA = false;
+    CASTLE_PERM.WQCA = false;
+  }
+  // black king
+  if (piece === PIECES.bK) {
+    CASTLE_PERM.BKCA = false;
+    CASTLE_PERM.BQCA = false;
+  }
+
+  // white king side rook
+  if (piece === PIECES.wR && parseInt(fromSquare) == SQUARES.h1) {
+    CASTLE_PERM.WKCA = false;
+  }
+  // white queen side rook
+  if (piece === PIECES.wR && parseInt(fromSquare) == SQUARES.a1) {
+    CASTLE_PERM.WQCA = false;
+  }
+
+  //black king rook
+  if (piece === PIECES.bR && parseInt(fromSquare) == SQUARES.h8) {
+    CASTLE_PERM.BKCA = false;
+  }
+  // black queen side rook
+  if (piece === PIECES.bR && parseInt(fromSquare) == SQUARES.a8) {
+    CASTLE_PERM.BQCA = false;
+  }
+}
+
+function castle(board, piece, toSquare) {
+  //white king  castle
+  if (piece === PIECES.wK) {
+    if (CASTLE_PERM.WKCA === true && parseInt(toSquare) === SQUARES.g1) {
+      board.squares[SQUARES.f1] = PIECES.wR;
+      board.squares[SQUARES.h1] = PIECES.EMPTY;
+    }
+    if (CASTLE_PERM.WQCA === true && parseInt(toSquare) === SQUARES.c1) {
+      board.squares[SQUARES.d1] = PIECES.wR;
+      board.squares[SQUARES.a1] = PIECES.EMPTY;
+    }
+  }
+
+  // black king castle
+  if (piece === PIECES.bK) {
+    if (CASTLE_PERM.BKCA === true && parseInt(toSquare) === SQUARES.g8) {
+      board.squares[SQUARES.f8] = PIECES.bR;
+      board.squares[SQUARES.h8] = PIECES.EMPTY;
+    }
+    if (CASTLE_PERM.BQCA === true && parseInt(toSquare) === SQUARES.c8) {
+      board.squares[SQUARES.d8] = PIECES.bR;
+      board.squares[SQUARES.a8] = PIECES.EMPTY;
+    }
+  }
 }
