@@ -253,7 +253,7 @@ export default class Board {
         let square = document.getElementById(coord);
         square.style.backgroundImage = imageUrl;
         square.style.backgroundRepeat = "no-repeat";
-        square.style.backgroundSize = "40px 40px";
+        square.style.backgroundSize = "100% 100%";
       });
     });
   }
