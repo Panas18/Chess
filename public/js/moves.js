@@ -93,27 +93,6 @@ function blackPawnMovesGen(board) {
   });
 }
 
-// function knightMovesGen(board, opponentMoveList, squaresCopy) {
-//   const knightPosns =
-//     board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wN"] : PIECE_LIST["bN"];
-//   knightPosns.forEach((currentPosn) => {
-//     const nextPosns = [];
-//     KNIGHT_MOVES.forEach((knightMove) => {
-//       nextPosn = currentPosn + knightMove;
-//       if (
-//         PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay &&
-//         board.squares[nextPosn] !== SQUARES.OFFBOARD
-//       ) {
-//         console.log(
-//           selfKingCheck(squaresCopy, opponentMoveList, currentPosn, nextPosn),
-//         );
-//         // console.log("not check in " + nextPosn)
-//         nextPosns.push(nextPosn);
-//       }
-//     });
-//     MOVELIST[currentPosn] = nextPosns;
-//   });
-// }
 
 function bishopMovesGen(board) {
   const bishopPosns =
@@ -131,8 +110,6 @@ function bishopMovesGen(board) {
         nextPosn = nextPosn + BISHOP_MOVES[i];
       }
       if (board.squares[nextPosn] !== SQUARES.OFFBOARD) {
-        // if (PIECES_COLOR[board.squares[nextPosn]] !== board.sidetoplay) {
-        // }
         if (PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay) {
           nextPosns.push(nextPosn);
         }
@@ -262,12 +239,19 @@ function opponentKingCheck(board, toSquare, fromSquare, selfMoveList) {
     moveLists.forEach((moveList) => {
       if (selfMoveList !== undefined) {
         if (moveList === parseInt(kingPosn)) {
-          // console.log(typeof (fromSquare), toSquare)
-          console.log(selfMoveList[fromSquare])
+          deleteMove(selfMoveList, fromSquare, toSquare)
         }
       }
     });
   }
+}
+
+function deleteMove(selfMoveList, fromSquare, toSquare) {
+  let arr = selfMoveList[fromSquare]
+  arr = arr.filter(function (item) {
+    return item != toSquare
+  })
+  selfMoveList[fromSquare] = arr
 }
 
 
