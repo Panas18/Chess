@@ -285,6 +285,10 @@ export default class Board {
     if (Object.values(board.toSquares).includes(parseInt(moveTo))) {
       board.squares[moveTo] = piece;
       board.squares[board.fromSquare] = PIECES.EMPTY;
+
+      if (piece === PIECES.wP || piece === PIECES.bP) {
+        promotePawn(board, piece, moveTo)
+      }
       castle(board, piece, moveTo);
       checkCastlePerm(piece, board.fromSquare);
       opponentKingCheck(board);

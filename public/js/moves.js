@@ -333,3 +333,18 @@ function castle(board, piece, toSquare) {
     }
   }
 }
+
+
+function promotePawn(board, piece, moveTo) {
+  // white pawn
+  moveTo = parseInt(moveTo)
+  if (piece === PIECES.wP) {
+    if (moveTo >= 91 && moveTo <= 98) {
+      board.squares[moveTo] = PIECES.wQ
+    }
+  } else {
+    if (moveTo >= 21 && moveTo <= 28) {
+      board.squares[moveTo] = PIECES.bQ
+    }
+  }
+}
