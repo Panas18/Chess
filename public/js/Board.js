@@ -269,64 +269,72 @@ export default class Board {
     }
   }
 
+  selectPieceToMove(board, event) {
+    board.resetSqColor();
+    board.fromSquare = event.target.id;
+    board.toSquares = MOVELIST[board.fromSquare];
+    const fromMOveSq = document.getElementById(board.fromSquare);
+    fromMOveSq.style.backgroundColor = "#0d7c15";
+    board.toSquares.forEach((toSquare) => {
+      const toMoveSq = document.getElementById(toSquare);
+      toMoveSq.style.backgroundColor = "#1ff95e";
+    });
+  }
+
+  movePiece(board, piece, moveTo) {
+    if (Object.values(board.toSquares).includes(parseInt(moveTo))) {
+      board.squares[moveTo] = piece;
+      board.squares[board.fromSquare] = PIECES.EMPTY;
+      castle(board, piece, moveTo);
+      checkCastlePerm(piece, board.fromSquare);
+      opponentKingCheck(board);
+      board.resetPieceList();
+      board.genPieceList();
+      board.getPiecesOnBoard();
+      board.resetSqColor();
+
+      //opponent move
+      board.sideToPlay = 1 - board.sideToPlay;
+      genLegalMove(board);
+
+      //check if piecemove leads to check
+      const selfMoveList = { ...MOVELIST };
+
+      for (const key in selfMoveList) {
+        selfMoveList[key].forEach((toSquare) => {
+          let selfPiece = board.squares[key];
+          let toSquarePiece = board.squares[toSquare];
+          board.squares[toSquare] = selfPiece;
+          board.squares[key] = PIECES.EMPTY;
+
+          board.sideToPlay = 1 - board.sideToPlay;
+          genLegalMove(board);
+          opponentKingCheck(board, toSquare, key, selfMoveList);
+          board.squares[toSquare] = toSquarePiece;
+          board.squares[key] = selfPiece;
+          board.sideToPlay = 1 - board.sideToPlay;
+        });
+      }
+
+      board.printBoard();
+      board.resetPieceList();
+      board.genPieceList();
+      MOVELIST = selfMoveList;
+    }
+  }
+
+
   visaualizeLegalMove(board) {
     this.resetSqColor();
     this.element.addEventListener("click", function (event) {
       if (!this.clicked) {
         this.clicked = !this.clicked;
-        board.resetSqColor();
-        board.fromSquare = event.target.id;
-        board.toSquares = MOVELIST[board.fromSquare];
-        const fromMOveSq = document.getElementById(board.fromSquare);
-        fromMOveSq.style.backgroundColor = "#0d7c15";
-        board.toSquares.forEach((toSquare) => {
-          const toMoveSq = document.getElementById(toSquare);
-          toMoveSq.style.backgroundColor = "#1ff95e";
-        });
+        board.selectPieceToMove(board, event);
       } else {
         this.clicked = !this.clicked;
         const piece = board.squares[board.fromSquare];
         const moveTo = event.target.id;
-        if (Object.values(board.toSquares).includes(parseInt(moveTo))) {
-          board.squares[moveTo] = piece;
-          board.squares[board.fromSquare] = PIECES.EMPTY;
-          castle(board, piece, moveTo);
-          checkCastlePerm(piece, board.fromSquare);
-          opponentKingCheck(board);
-          board.resetPieceList();
-          board.genPieceList();
-          board.getPiecesOnBoard();
-          board.resetSqColor();
-
-          //opponent move
-          board.sideToPlay = 1 - board.sideToPlay;
-          genLegalMove(board);
-
-          //check if piecemove leads to check
-          const selfMoveList = { ...MOVELIST }
-
-          for (const key in selfMoveList) {
-            selfMoveList[key].forEach(toSquare => {
-              let selfPiece = board.squares[key]
-              let toSquarePiece = board.squares[toSquare]
-              board.squares[toSquare] = selfPiece;
-              board.squares[key] = PIECES.EMPTY;
-
-              board.sideToPlay = 1 - board.sideToPlay
-              genLegalMove(board);
-              opponentKingCheck(board, toSquare, key, selfMoveList)
-              board.squares[toSquare] = toSquarePiece;
-              board.squares[key] = selfPiece;
-              board.sideToPlay = 1 - board.sideToPlay
-
-            });
-          }
-
-          board.printBoard();
-          board.resetPieceList();
-          board.genPieceList();
-          MOVELIST = selfMoveList
-        }
+        board.movePiece(board, piece, moveTo);
       }
     });
   }

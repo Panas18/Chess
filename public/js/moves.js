@@ -267,16 +267,6 @@ function knightMovesGen(board, movelist) {
         board.squares[nextPosn] !== SQUARES.OFFBOARD
       ) {
         if (movelist !== undefined) {
-          // const selfPiece = board.squares[currentPosn];
-          // const oppPiece = board.squares[nextPosn];
-          // board.squares[nextPosn] = selfPiece;
-          // board.squares[currentPosn] = PIECES.EMPTY;
-
-          // selfKingCheck(board, movelist, nextPosn, currentPosn);
-
-          // board.squares[nextPosn] = oppPiece
-          // board.squares[currentPosn] = selfPiece;
-
           nextPosns.push(nextPosn);
         } else {
           nextPosns.push(nextPosn);
