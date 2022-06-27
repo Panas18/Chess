@@ -4,7 +4,9 @@ const BOARD_SQ_NUM = 64
 const FILE_ARRAY = Array(TOTAL_SQ_NUM)
 const RANK_ARRAY = Array(TOTAL_SQ_NUM)
 
-const STARTING_POSITION = '2bqkbnr/Prpp2pp/1pn2p2/4p3/8/3P4/1PP1PPPP/RN1QKBNR b KQk - 0 7'
+// const STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+
+const STARTING_POSITION = '1k6/8/K7/8/2Q5/8/8/8 w - - 0 1'
 const CASTLE_PERM = {
   WKCA: false, WQCA: false, BKCA: false, BQCA: false,
 }

@@ -228,7 +228,24 @@ function kingMovesGen(board) {
   });
 }
 
-function opponentKingCheck(board, toSquare, fromSquare, selfMoveList) {
+function opponentKingCheck(board) {
+  board.resetPieceList();
+  board.genPieceList();
+  genLegalMove(board);
+  const kingPosn =
+    board.sideToPlay == COLOR.WHITE ? PIECE_LIST["bK"] : PIECE_LIST["wK"];
+  for (const key in MOVELIST) {
+    const moveLists = MOVELIST[key];
+    moveLists.forEach((moveList) => {
+      if (moveList === parseInt(kingPosn)) {
+        board.check = true
+        // deleteMove(selfMoveList, fromSquare, toSquare)
+      }
+    });
+  }
+}
+
+function selfKingCheck(board, toSquare, fromSquare, selfMoveList) {
   board.resetPieceList();
   board.genPieceList();
   genLegalMove(board);
@@ -245,7 +262,6 @@ function opponentKingCheck(board, toSquare, fromSquare, selfMoveList) {
     });
   }
 }
-
 function deleteMove(selfMoveList, fromSquare, toSquare) {
   let arr = selfMoveList[fromSquare]
   arr = arr.filter(function (item) {

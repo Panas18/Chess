@@ -285,9 +285,9 @@ export default class Board {
     if (Object.values(board.toSquares).includes(parseInt(moveTo))) {
       board.squares[moveTo] = piece;
       board.squares[board.fromSquare] = PIECES.EMPTY;
-
+      board.check = false
       if (piece === PIECES.wP || piece === PIECES.bP) {
-        promotePawn(board, piece, moveTo)
+        promotePawn(board, piece, moveTo);
       }
       castle(board, piece, moveTo);
       checkCastlePerm(piece, board.fromSquare);
@@ -297,7 +297,7 @@ export default class Board {
       board.getPiecesOnBoard();
       board.resetSqColor();
 
-      //opponent move
+      //gen next move next
       board.sideToPlay = 1 - board.sideToPlay;
       genLegalMove(board);
 
@@ -313,7 +313,7 @@ export default class Board {
 
           board.sideToPlay = 1 - board.sideToPlay;
           genLegalMove(board);
-          opponentKingCheck(board, toSquare, key, selfMoveList);
+          selfKingCheck(board, toSquare, key, selfMoveList);
           board.squares[toSquare] = toSquarePiece;
           board.squares[key] = selfPiece;
           board.sideToPlay = 1 - board.sideToPlay;
@@ -324,9 +324,24 @@ export default class Board {
       board.resetPieceList();
       board.genPieceList();
       MOVELIST = selfMoveList;
+
+      var empty = true;
+      empty = Object.keys(MOVELIST).map((key) => {
+        if (MOVELIST[key].length !== 0) {
+          return false;
+        } else {
+          return true
+        }
+      });
+      if (!empty.includes(false)) {
+        if (board.check) {
+          console.log("CheckMate")
+        } else {
+          console.log("stalemate")
+        }
+      }
     }
   }
-
 
   visaualizeLegalMove(board) {
     this.resetSqColor();
@@ -339,6 +354,7 @@ export default class Board {
         const piece = board.squares[board.fromSquare];
         const moveTo = event.target.id;
         board.movePiece(board, piece, moveTo);
+        board.check = false
       }
     });
   }
