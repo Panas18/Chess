@@ -25,29 +25,31 @@ function evaluatePosition(PIECE_LIST) {
 
 }
 
+function minimax(board, depth, side) {
+	sideToPlay = side
 
-function minimax(board, depth, maxmizingPlayer) {
-	if (maxmizingPlayer === COLOR.WHITE) {
-		for (const key in MOVELIST) {
-			if (MOVELIST[key].length !== 0) {
-				for (const toSquare of MOVELIST[key]) {
-					let squares = movePiece(board, key, toSquare)
-					resetPieces(board, squares)
-				}
-			}
-		}
+	if (depth <= 0) {
+		console.log("depth complete")
+		return 0
+	}
+
+	for (node of position) {
+		fromSquare = parseInt(Object.keys(node))
+		toSquare = Object.values(node)[0]
+		var squares = [...board.squares]
+		movePiece(board, fromSquare, toSquare)
+		minimax(board, depth - 1, 1 - side)
+		resetPieces(board, squares)
 	}
 }
 
 function resetPieces(board, squares) {
 	board.squares = squares
-	board.resetPieceList();
 	board.genPieceList();
 
 }
 
 function movePiece(board, from, moveTo) {
-	let squares = [...board.squares]
 	piece = board.squares[from]
 	board.squares[moveTo] = piece;
 	board.squares[from] = PIECES.EMPTY;
@@ -60,8 +62,29 @@ function movePiece(board, from, moveTo) {
 	opponentKingCheck(board);
 	checkOrStaleMate(board)
 	board.printBoard();
-	// board.squares = squares
-	// board.resetPieceList();
-	// board.genPieceList();
-	return squares
+
+	// gen next move next
+	sideToPlay = 1 - sideToPlay;
+	genLegalMove(board);
+
+	//check if piecemove leads to check
+	const selfMoveList = { ...MOVELIST };
+
+	for (const key in selfMoveList) {
+		selfMoveList[key].forEach((toSquare) => {
+			let selfPiece = board.squares[key];
+			let toSquarePiece = board.squares[toSquare];
+			board.squares[toSquare] = selfPiece;
+			board.squares[key] = PIECES.EMPTY;
+
+			sideToPlay = 1 - sideToPlay;
+			genLegalMove(board);
+			selfKingCheck(board, toSquare, key, selfMoveList);
+			board.squares[toSquare] = toSquarePiece;
+			board.squares[key] = selfPiece;
+			sideToPlay = 1 - sideToPlay;
+		});
+	}
+
+	MOVELIST = selfMoveList
 }

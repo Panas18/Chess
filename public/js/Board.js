@@ -91,6 +91,7 @@ export default class Board {
       if (CASTLE_PERM[key]) line += CASTLE_CHAR[index];
     });
     console.log("Castle Permission: " + line);
+    console.log("")
   }
 
   parseFEN(fenString) {
@@ -200,6 +201,7 @@ export default class Board {
   }
 
   genPieceList() {
+    this.resetPieceList()
     this.boardIndex.forEach((index) => {
       switch (this.squares[index]) {
         case 1:

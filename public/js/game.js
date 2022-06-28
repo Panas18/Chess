@@ -3,4 +3,4 @@ const board = new Board()
 
 // genLegalMove(board)
 board.visaualizeLegalMove(board)
-minimax(board, 1, COLOR.WHITE)
+minimax(board, 2, COLOR.WHITE)
