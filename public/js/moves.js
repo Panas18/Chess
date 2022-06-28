@@ -1,12 +1,12 @@
-function genLegalMove(board, movelist) {
+function genLegalMove(board) {
   resetMoveList();
-  if (board.sideToPlay === COLOR.WHITE) {
+  if (sideToPlay === COLOR.WHITE) {
     whitePawnMovesGen(board);
   }
-  if (board.sideToPlay === COLOR.BLACK) {
+  if (sideToPlay === COLOR.BLACK) {
     blackPawnMovesGen(board);
   }
-  knightMovesGen(board, movelist);
+  knightMovesGen(board);
   bishopMovesGen(board);
   rookMovesGen(board);
   queenMovesGen(board);
@@ -96,7 +96,7 @@ function blackPawnMovesGen(board) {
 
 function bishopMovesGen(board) {
   const bishopPosns =
-    board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wB"] : PIECE_LIST["bB"];
+    sideToPlay == COLOR.WHITE ? PIECE_LIST["wB"] : PIECE_LIST["bB"];
   bishopPosns.forEach((currentPosn) => {
     const nextPosns = [];
     // console.log(currentPosn)
@@ -110,7 +110,7 @@ function bishopMovesGen(board) {
         nextPosn = nextPosn + BISHOP_MOVES[i];
       }
       if (board.squares[nextPosn] !== SQUARES.OFFBOARD) {
-        if (PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay) {
+        if (PIECES_COLOR[board.squares[nextPosn]] !== sideToPlay) {
           nextPosns.push(nextPosn);
         }
       }
@@ -121,7 +121,7 @@ function bishopMovesGen(board) {
 
 function rookMovesGen(board) {
   const rookPosns =
-    board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wR"] : PIECE_LIST["bR"];
+    sideToPlay == COLOR.WHITE ? PIECE_LIST["wR"] : PIECE_LIST["bR"];
   rookPosns.forEach((currentPosn) => {
     const nextPosns = [];
     // console.log(currentPosn)
@@ -135,7 +135,7 @@ function rookMovesGen(board) {
         nextPosn = nextPosn + ROOK_MOVES[i];
       }
       if (board.squares[nextPosn] !== SQUARES.OFFBOARD) {
-        if (PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay) {
+        if (PIECES_COLOR[board.squares[nextPosn]] !== sideToPlay) {
           nextPosns.push(nextPosn);
         }
       }
@@ -146,7 +146,7 @@ function rookMovesGen(board) {
 
 function queenMovesGen(board) {
   const queenPosns =
-    board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wQ"] : PIECE_LIST["bQ"];
+    sideToPlay == COLOR.WHITE ? PIECE_LIST["wQ"] : PIECE_LIST["bQ"];
   queenPosns.forEach((currentPosn) => {
     const nextPosns = [];
     for (let i = 0; i < QUEEN_MOVES.length; i++) {
@@ -159,7 +159,7 @@ function queenMovesGen(board) {
         nextPosn = nextPosn + QUEEN_MOVES[i];
       }
       if (board.squares[nextPosn] !== SQUARES.OFFBOARD) {
-        if (PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay) {
+        if (PIECES_COLOR[board.squares[nextPosn]] !== sideToPlay) {
           nextPosns.push(nextPosn);
         }
       }
@@ -170,13 +170,13 @@ function queenMovesGen(board) {
 
 function kingMovesGen(board) {
   const kingPosns =
-    board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wK"] : PIECE_LIST["bK"];
+    sideToPlay == COLOR.WHITE ? PIECE_LIST["wK"] : PIECE_LIST["bK"];
   kingPosns.forEach((currentPosn) => {
     const nextPosns = [];
     QUEEN_MOVES.forEach((kingMove) => {
       nextPosn = currentPosn + kingMove;
       if (
-        PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay &&
+        PIECES_COLOR[board.squares[nextPosn]] !== sideToPlay &&
         board.squares[nextPosn] !== SQUARES.OFFBOARD
       ) {
         nextPosns.push(nextPosn);
@@ -184,7 +184,7 @@ function kingMovesGen(board) {
     });
 
     ///white king castle moves gen
-    if (board.sideToPlay === COLOR.WHITE) {
+    if (sideToPlay === COLOR.WHITE) {
       if (CASTLE_PERM.WKCA) {
         if (
           board.squares[SQUARES.f1] === PIECES.EMPTY &&
@@ -205,7 +205,7 @@ function kingMovesGen(board) {
     }
 
     ///black king castle moves gen
-    if (board.sideToPlay === COLOR.BLACK) {
+    if (sideToPlay === COLOR.BLACK) {
       if (CASTLE_PERM.BKCA) {
         if (
           board.squares[SQUARES.f8] === PIECES.EMPTY &&
@@ -233,7 +233,7 @@ function opponentKingCheck(board) {
   board.genPieceList();
   genLegalMove(board);
   const kingPosn =
-    board.sideToPlay == COLOR.WHITE ? PIECE_LIST["bK"] : PIECE_LIST["wK"];
+    sideToPlay == COLOR.WHITE ? PIECE_LIST["bK"] : PIECE_LIST["wK"];
   for (const key in MOVELIST) {
     const moveLists = MOVELIST[key];
     moveLists.forEach((moveList) => {
@@ -250,7 +250,7 @@ function selfKingCheck(board, toSquare, fromSquare, selfMoveList) {
   board.genPieceList();
   genLegalMove(board);
   const kingPosn =
-    board.sideToPlay == COLOR.WHITE ? PIECE_LIST["bK"] : PIECE_LIST["wK"];
+    sideToPlay == COLOR.WHITE ? PIECE_LIST["bK"] : PIECE_LIST["wK"];
   for (const key in MOVELIST) {
     const moveLists = MOVELIST[key];
     moveLists.forEach((moveList) => {
@@ -273,13 +273,13 @@ function deleteMove(selfMoveList, fromSquare, toSquare) {
 
 function knightMovesGen(board, movelist) {
   const knightPosns =
-    board.sideToPlay == COLOR.WHITE ? PIECE_LIST["wN"] : PIECE_LIST["bN"];
+    sideToPlay == COLOR.WHITE ? PIECE_LIST["wN"] : PIECE_LIST["bN"];
   knightPosns.forEach((currentPosn) => {
     const nextPosns = [];
     KNIGHT_MOVES.forEach((knightMove) => {
       nextPosn = currentPosn + knightMove;
       if (
-        PIECES_COLOR[board.squares[nextPosn]] !== board.sideToPlay &&
+        PIECES_COLOR[board.squares[nextPosn]] !== sideToPlay &&
         board.squares[nextPosn] !== SQUARES.OFFBOARD
       ) {
         if (movelist !== undefined) {
@@ -361,6 +361,24 @@ function promotePawn(board, piece, moveTo) {
   } else {
     if (moveTo >= 21 && moveTo <= 28) {
       board.squares[moveTo] = PIECES.bQ
+    }
+  }
+}
+
+function checkOrStaleMate(board) {
+  var empty = true;
+  empty = Object.keys(MOVELIST).map((key) => {
+    if (MOVELIST[key].length !== 0) {
+      return false;
+    } else {
+      return true
+    }
+  });
+  if (!empty.includes(false)) {
+    if (board.check) {
+      console.log("CheckMate")
+    } else {
+      console.log("stalemate")
     }
   }
 }

@@ -6,7 +6,7 @@ export default class Board {
     this.check = false;
     this.toSquare = 0;
     this.fromSquare = 0;
-    this.sideToPlay = COLOR.NONE;
+    // sideToPlay = COLOR.NONE;
     this.squares = Array(TOTAL_SQ_NUM);
     this.boardIndex = gen64arrayIndex();
     this.element = document.querySelector("#chess--board");
@@ -15,6 +15,8 @@ export default class Board {
     this.parseFEN(STARTING_POSITION);
     this.drawBoard();
     this.genPieceList();
+    this.getPiecesOnBoard()
+    genLegalMove(this)
     this.printBoard();
   }
 
@@ -75,7 +77,7 @@ export default class Board {
     console.log("");
     console.log(line);
 
-    console.log("To Play: " + side[this.sideToPlay]);
+    console.log("To Play: " + side[sideToPlay]);
     let enPassantChar = Object.keys(SQUARES).find(
       (k) => SQUARES[k] === this.enPassant,
     );
@@ -161,8 +163,8 @@ export default class Board {
     fenIndex += 1; //move fen index one index forward to the  side indicator
     this.sidePlay =
       fenString[fenIndex] === "w"
-        ? (this.sideToPlay = COLOR.WHITE)
-        : (this.sideToPlay = COLOR.BLACK);
+        ? (sideToPlay = COLOR.WHITE)
+        : (sideToPlay = COLOR.BLACK);
 
     fenIndex += 2; //move fen index two index forward to the  castle bit indicator
 
@@ -298,7 +300,7 @@ export default class Board {
       board.resetSqColor();
 
       //gen next move next
-      board.sideToPlay = 1 - board.sideToPlay;
+      sideToPlay = 1 - sideToPlay;
       genLegalMove(board);
 
       //check if piecemove leads to check
@@ -311,50 +313,38 @@ export default class Board {
           board.squares[toSquare] = selfPiece;
           board.squares[key] = PIECES.EMPTY;
 
-          board.sideToPlay = 1 - board.sideToPlay;
+          sideToPlay = 1 - sideToPlay;
           genLegalMove(board);
           selfKingCheck(board, toSquare, key, selfMoveList);
           board.squares[toSquare] = toSquarePiece;
           board.squares[key] = selfPiece;
-          board.sideToPlay = 1 - board.sideToPlay;
+          sideToPlay = 1 - sideToPlay;
         });
       }
 
       board.printBoard();
       board.resetPieceList();
       board.genPieceList();
+      evaluatePosition(PIECE_LIST)
       MOVELIST = selfMoveList;
 
-      var empty = true;
-      empty = Object.keys(MOVELIST).map((key) => {
-        if (MOVELIST[key].length !== 0) {
-          return false;
-        } else {
-          return true
-        }
-      });
-      if (!empty.includes(false)) {
-        if (board.check) {
-          console.log("CheckMate")
-        } else {
-          console.log("stalemate")
-        }
-      }
+      checkOrStaleMate(board)
     }
   }
 
   visaualizeLegalMove(board) {
-    this.resetSqColor();
+    // this.resetSqColor();
     this.element.addEventListener("click", function (event) {
       if (!this.clicked) {
-        this.clicked = !this.clicked;
         board.selectPieceToMove(board, event);
+        this.clicked = !this.clicked;
       } else {
         this.clicked = !this.clicked;
         const piece = board.squares[board.fromSquare];
         const moveTo = event.target.id;
         board.movePiece(board, piece, moveTo);
         board.check = false
+        board.resetSqColor();
       }
     });
   }

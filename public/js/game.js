@@ -1,7 +1,6 @@
 import Board from './Board.js'
 const board = new Board()
 
-
-board.getPiecesOnBoard()
-genLegalMove(board)
+// genLegalMove(board)
 board.visaualizeLegalMove(board)
+minimax(board, 1, COLOR.WHITE)

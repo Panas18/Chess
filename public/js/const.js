@@ -1,12 +1,13 @@
 const TOTAL_SQ_NUM = 120
 const BOARD_SQ_NUM = 64
+const INFINITY = 30000
 
 const FILE_ARRAY = Array(TOTAL_SQ_NUM)
 const RANK_ARRAY = Array(TOTAL_SQ_NUM)
 
-// const STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+const STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 
-const STARTING_POSITION = '1k6/8/K7/8/2Q5/8/8/8 w - - 0 1'
+// const STARTING_POSITION = '1k6/8/K7/8/2Q5/8/8/8 w - - 0 1'
 const CASTLE_PERM = {
   WKCA: false, WQCA: false, BKCA: false, BQCA: false,
 }
@@ -25,7 +26,7 @@ COLOR.BLACK, COLOR.BLACK, COLOR.BLACK, COLOR.BLACK, COLOR.BLACK, COLOR.BLACK
 
 var MOVELIST = {}
 
-const PIECE_LIST = {
+var PIECE_LIST = {
   wP: [], wN: [], wB: [], wR: [], wQ: [], wK: [], bP: [], bN: [], bB: [], bR: [], bQ: [], bK: [],
 
 }
@@ -36,6 +37,8 @@ const side = 'wbN'
 const PIECES_VALUE = [
   0, 100, 300, 300, 500, 900, 1000, 100, 300, 300, 500, 900, 1000,
 ]
+
+var sideToPlay = 2
 
 //File value of the chess board
 const FILE = {
