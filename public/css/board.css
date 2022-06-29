@@ -18,5 +18,9 @@
 }
 
 .light {
-  background-color: #EFEFD2
+  background-color: #EFEFD3
+}
+
+.inCheck {
+  background-color: rgb(216, 129, 129) !important;
 }

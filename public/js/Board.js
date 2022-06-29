@@ -3,6 +3,8 @@ export default class Board {
     this.enPassant = 0;
     this.capture = false;
     this.clicked = false;
+    this.engineTo = 0
+    this.engineFrom = 0
     this.check = false;
     this.toSquare = 0;
     this.fromSquare = 0;
@@ -76,7 +78,6 @@ export default class Board {
     }
     console.log("");
     console.log(line);
-
     console.log("To Play: " + side[sideToPlay]);
     let enPassantChar = Object.keys(SQUARES).find(
       (k) => SQUARES[k] === this.enPassant,
@@ -91,6 +92,7 @@ export default class Board {
       if (CASTLE_PERM[key]) line += CASTLE_CHAR[index];
     });
     console.log("Castle Permission: " + line);
+    console.log("")
     console.log("")
   }
 
@@ -247,6 +249,7 @@ export default class Board {
   }
 
   getPiecesOnBoard() {
+    // console.log('testing draw');
     const squares = document.getElementsByClassName("square");
     for (let i = 0; i < squares.length; i++) {
       squares[i].style.backgroundImage = "";
@@ -286,6 +289,7 @@ export default class Board {
   }
 
   movePiece(board, piece, moveTo) {
+    // console.log('moving');
     if (Object.values(board.toSquares).includes(parseInt(moveTo))) {
       board.squares[moveTo] = piece;
       board.squares[board.fromSquare] = PIECES.EMPTY;
@@ -296,10 +300,10 @@ export default class Board {
       castle(board, piece, moveTo);
       checkCastlePerm(piece, board.fromSquare);
       opponentKingCheck(board);
-      board.resetPieceList();
       board.genPieceList();
       board.getPiecesOnBoard();
       board.resetSqColor();
+
 
       //gen next move next
       sideToPlay = 1 - sideToPlay;

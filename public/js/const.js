@@ -5,9 +5,13 @@ const INFINITY = 30000
 const FILE_ARRAY = Array(TOTAL_SQ_NUM)
 const RANK_ARRAY = Array(TOTAL_SQ_NUM)
 
-const STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+var engineFrom = 0
+var engineTo = 0
 
-// const STARTING_POSITION = '1k6/8/K7/8/2Q5/8/8/8 w - - 0 1'
+// const STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+// const STARTING_POSITION = 'r1bqkbnr/ppp2ppp/2np4/1B2p3/3PP3/8/PPP2PPP/RNBQK1NR w KQkq - 0 4'
+
+const STARTING_POSITION = 'rn2kbnr/ppp2ppp/3p4/3bpq2/1P2P3/P1P5/1B1P1PPP/RN1QKBNR w KQkq - 1 7'
 const CASTLE_PERM = {
   WKCA: false, WQCA: false, BKCA: false, BQCA: false,
 }
@@ -16,6 +20,7 @@ const CASTLE_CHAR = ['K', 'Q', 'k', 'q']
 const COLOR = {
   WHITE: 0, BLACK: 1, NONE: 2,
 }
+
 //value of each chess pieces on the board
 const PIECES = {
   EMPTY: 0, wP: 1, wN: 2, wB: 3, wR: 4, wQ: 5, wK: 6, bP: 7, bN: 8, bB: 9, bR: 10, bQ: 11, bK: 12,
