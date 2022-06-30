@@ -86,3 +86,12 @@
 	color: white;
 	align-items: center;
 }
+
+.draw--wrapper {
+	display: none;
+}
+
+.draw--container {
+	justify-content: center;
+	color: white
+}

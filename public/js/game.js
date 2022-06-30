@@ -2,33 +2,44 @@ const optionWrapper = document.getElementsByClassName("option-wrapper")[0];
 const gameWrapper = document.getElementsByClassName("game-wrapper")[0];
 const resignWrapper = document.getElementsByClassName("resign--wrapper")[0];
 const endWrapper = document.getElementsByClassName("end--wrapper")[0];
+const drawWrapper = document.getElementsByClassName("draw--wrapper")[0];
 
 const rightContainer = document.getElementsByClassName("right--container")[0];
 const gameContainer = document.getElementsByClassName("game--container")[0];
 const resignContainer = document.getElementsByClassName("resign--container")[0];
 const endContainer = document.getElementsByClassName("end--container")[0];
+const drawContainer = document.getElementsByClassName("draw--container")[0];
 
+var resignBy = 2
 
 import Board from "./Board.js";
 import Timer from "./Time.js";
 const board = new Board();
 
-function resign(side) {
-	let color = side == COLOR.WHITE ? "Black" : "White"
-	let endMessage = `${color} won by resignation`
-	endContainer.innerHTML = endMessage
-	resignWrapper.style.display = "none"
-	endWrapper.style.display = "block"
-}
 
 resignContainer.addEventListener("click", function (event) {
 	let option = event.target.id;
 	switch (option) {
 		case "yes":
-			resign(board.sideToPlay)
+			resign(resignBy)
 			break;
 		case "no":
 			resignWrapper.style.display = "none"
+			gameWrapper.style.display = "block"
+			break;
+		default:
+			break;
+	}
+});
+
+drawContainer.addEventListener("click", function (event) {
+	let option = event.target.id;
+	switch (option) {
+		case "yes":
+			draw()
+			break;
+		case "no":
+			drawWrapper.style.display = "none"
 			gameWrapper.style.display = "block"
 			break;
 		default:
@@ -42,9 +53,11 @@ gameContainer.addEventListener("click", function (event) {
 		case "resign":
 			gameWrapper.style.display = "none"
 			resignWrapper.style.display = "block"
+			resignBy = board.sideToPlay
 			break;
 		case "draw":
-			console.log("draw")
+			gameWrapper.style.display = "none"
+			drawWrapper.style.display = "block"
 			break;
 		default:
 			break;
@@ -138,3 +151,20 @@ function autoPlay(board) {
 	});
 }
 
+
+function resign(side) {
+	let color = side == COLOR.WHITE ? "Black" : "White"
+	let endMessage = `${color} won by resignation`
+	endContainer.innerHTML = endMessage
+	resignWrapper.style.display = "none"
+	endWrapper.style.display = "block"
+	MOVELIST = {}
+}
+
+function draw() {
+	let drawMessage = "Draw by Aggrement"
+	endContainer.innerHTML = drawMessage
+	drawWrapper.style.display = "none"
+	endWrapper.style.display = "block"
+	MOVELIST = {}
+}
