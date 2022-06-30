@@ -1,12 +1,17 @@
-#option--container {
+.option-wrapper {
+	display: block;
+}
+
+.option--container {
 	display: flex;
 	margin-left: 20px;
 	width: 30vmin;
-	height: 80vmin;
+	height: 70vmin;
 	align-items: center;
 	flex-direction: column;
 	margin-right: 20px;
 	background-color: #20201C;
+	/* display: none; */
 }
 
 
@@ -22,5 +27,40 @@
 	border-radius: 7px;
 	color: white;
 	font-size: 20px;
-	margin: 20px
+	margin: 20px;
+}
+
+.play-option:hover {
+	border: 2px solid #637C44;
+	background-color: #3C3A39;
+}
+
+.game-wrapper {
+	display: none;
+}
+
+.game--container {
+	display: flex;
+	margin-left: 20px;
+	width: 30vmin;
+	height: 70vmin;
+	align-items: center;
+	flex-direction: column;
+	margin-right: 20px;
+	background-color: #20201C;
+	justify-content: space-evenly;
+}
+
+.option {
+	color: wheat;
+	font-size: 20px
+}
+
+.counter {
+	color: white;
+	font-size: 20px;
+}
+
+.option:hover {
+	color: white
 }

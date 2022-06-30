@@ -13,7 +13,7 @@
 .main-container {
   width: 100vw;
   height: 100vh;
-  /* background-color: #302E2A; */
+  background-color: #302E2A;
   display: flex;
   justify-content: center;
   align-items: center;

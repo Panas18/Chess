@@ -1,3 +1,7 @@
+
+const whiteTimeDisplay = document.getElementById("counter--white")
+const blackTimeDisplay = document.getElementById("counter--black")
+
 const TOTAL_SQ_NUM = 120
 const BOARD_SQ_NUM = 64
 const INFINITY = 30000

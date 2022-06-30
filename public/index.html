@@ -16,25 +16,45 @@
     <div id="chess-container">
       <div id="chess--board"></div>
     </div>
-    <div id="option--container">
-      <div id="1" class="play-option">
-        3min
+    <div class="option-wrapper">
+      <div class="option--container">
+        <div id="1" class="play-option">
+          3 min
+        </div>
+        <div id="2" class="play-option">
+          5 min
+        </div>
+        <div id="3" class="play-option">
+          10 min
+        </div>
+        <div id="4" class="play-option">
+          Play with computer
+        </div>
       </div>
-      <div id="2" class="play-option">
-        5min
+    </div>
+    <div class="game-wrapper">
+      <div class="game--container">
+        <div id="counter--black" class="counter">
+          00:00
+        </div>
+        <div id="resign" class="option">
+          Resign
+        </div>
+        <div id="draw" class="option">
+          Offer Draw
+        </div>
+        <div id="counter--white" class="counter ">
+          00:00
+        </div>
       </div>
-      <div id="3" class="play-option">
-        10min
-      </div>
-      <div id="4" class="play-option">
-        Play with computer
-      </div>
+
     </div>
   </div>
   <script src="./js/const.js" defer></script>
   <script src="./js/utils.js" defer></script>
   <script src="./js/moves.js" defer></script>
   <script src="./js/search.js" defer></script>
+  <script type="module" src="./js/Time.js" defer></script>
   <script type="module" src="./js/Board.js" defer></script>
   <script type="module" src="./js/game.js" defer></script>
 

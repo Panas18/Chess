@@ -1,6 +1,8 @@
+
 export default class Board {
   constructor() {
     this.enPassant = 0;
+    this.sideToPlay = 2
     this.capture = false;
     this.clicked = false;
     this.engineTo = 0
@@ -19,6 +21,7 @@ export default class Board {
     this.genPieceList();
     this.getPiecesOnBoard()
     genLegalMove(this)
+    this.sideToPlay = this.sidePlay
     this.printBoard();
   }
 
@@ -260,6 +263,7 @@ export default class Board {
         square.style.backgroundImage = imageUrl;
         square.style.backgroundRepeat = "no-repeat";
         square.style.backgroundSize = "100% 100%";
+        // square.style.transform="rotate(180deg)"
       });
     });
   }
@@ -305,6 +309,7 @@ export default class Board {
 
       //gen next move next
       sideToPlay = 1 - sideToPlay;
+      board.sideToPlay = 1 - board.sideToPlay
       genLegalMove(board);
 
       //check if piecemove leads to check

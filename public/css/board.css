@@ -1,7 +1,7 @@
 #chess-container {
   outline: 2px solid rgb(17, 16, 16);
-  max-width: 80vmin;
-  max-height: 80vmin;
+  max-width: 70vmin;
+  max-height: 70vmin;
   height: 100%;
   width: 100%;
 }
@@ -13,7 +13,10 @@
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
+  /* transform: rotate(360deg); */
 }
+
+
 
 .dark {
   background-color: #779756;
