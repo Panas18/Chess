@@ -1,3 +1,7 @@
+var fromSquare = 0
+var toSquare = 0
+var prevEval = 0
+
 function evaluatePosition(PIECE_LIST) {
 	let score = 0;
 
@@ -36,15 +40,22 @@ function minimax(board, depth, alpha, beta, side) {
 	if (sideToPlay == 1) {
 		let maxEval = -INFINITY;
 		for (node of position) {
-			let fromSquare = parseInt(Object.keys(node));
-			let toSquare = Object.values(node)[0];
+			fromSquare = parseInt(Object.keys(node));
+			toSquare = Object.values(node)[0];
+
 			let squares = [...board.squares];
-			movePiece(board, fromSquare, toSquare);
+			move(board, fromSquare, toSquare);
 			let eval = minimax(board, depth - 1, alpha, beta, 1 - side);
-			if (maxEval > eval) {
+			console.log(eval)
+			if (eval > prevEval) {
+				console.log("better or equally better move")
+				console.log(eval)
 				engineFrom = fromSquare
 				engineTo = toSquare
 			}
+			prevEval = eval
+			// engineFrom = fromSquare
+			// engineTo = toSquare
 			maxEval = Math.max(maxEval, eval);
 			alpha = Math.max(alpha, eval)
 			board.genPieceList(board, board.squares);
@@ -135,7 +146,7 @@ function movePiece(board, from, moveTo) {
 	board.getPiecesOnBoard();
 
 	//gen next move next
-	sideToPlay = 1 - sideToPlay;
+	sideToPlay = COLOR.WHITE;
 	genLegalMove(board);
 
 	//check if piecemove leads to check
@@ -157,7 +168,6 @@ function movePiece(board, from, moveTo) {
 		});
 	}
 
-	board.printBoard();
 	board.resetPieceList();
 	board.genPieceList();
 	MOVELIST = selfMoveList;

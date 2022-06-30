@@ -70,30 +70,29 @@ export default class Board {
         let piece = this.squares[square];
         line += " " + PIECE_CHAR[piece] + " ";
       }
-      console.log(line);
+      // console.log(line);
     }
     let line = "   ";
     for (let file = FILE.FILE_A; file <= FILE.FILE_H; file++) {
       line += " " + FILE_CHAR[file] + " ";
     }
-    console.log("");
-    console.log(line);
-    console.log("To Play: " + side[sideToPlay]);
+    // console.log("");
+    // console.log(line);
+    // console.log("To Play: " + side[sideToPlay]);
     let enPassantChar = Object.keys(SQUARES).find(
       (k) => SQUARES[k] === this.enPassant,
     );
     if (typeof enPassantChar == "undefined") {
       enPassantChar = "None";
     }
-    console.log("EnPassant Square: " + enPassantChar);
+    // console.log("EnPassant Square: " + enPassantChar);
 
-    line = "";
+    // line = "";
     Object.keys(CASTLE_PERM).forEach((key, index) => {
       if (CASTLE_PERM[key]) line += CASTLE_CHAR[index];
     });
-    console.log("Castle Permission: " + line);
-    console.log("")
-    console.log("")
+    // console.log("Castle Permission: " + line); console.log("")
+    // console.log("")
   }
 
   parseFEN(fenString) {
@@ -289,7 +288,6 @@ export default class Board {
   }
 
   movePiece(board, piece, moveTo) {
-    // console.log('moving');
     if (Object.values(board.toSquares).includes(parseInt(moveTo))) {
       board.squares[moveTo] = piece;
       board.squares[board.fromSquare] = PIECES.EMPTY;

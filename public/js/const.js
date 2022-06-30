@@ -8,10 +8,10 @@ const RANK_ARRAY = Array(TOTAL_SQ_NUM)
 var engineFrom = 0
 var engineTo = 0
 
-// const STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+const STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 // const STARTING_POSITION = 'r1bqkbnr/ppp2ppp/2np4/1B2p3/3PP3/8/PPP2PPP/RNBQK1NR w KQkq - 0 4'
 
-const STARTING_POSITION = 'rn2kbnr/ppp2ppp/3p4/3bpq2/1P2P3/P1P5/1B1P1PPP/RN1QKBNR w KQkq - 1 7'
+// const STARTING_POSITION = 'rn2kbnr/ppp2ppp/3p4/3bpq2/1P2P3/P1P5/1B1P1PPP/RN1QKBNR w KQkq - 1 7'
 const CASTLE_PERM = {
   WKCA: false, WQCA: false, BKCA: false, BQCA: false,
 }
