@@ -376,9 +376,28 @@ function checkOrStaleMate(board) {
   });
   if (!empty.includes(false)) {
     if (board.check) {
+      checkMate = true
       console.log("CheckMate")
+      displayMate(board)
     } else {
+      stalemate = true
       console.log("stalemate")
+      displayMate(board)
     }
+  }
+}
+
+function displayMate(board) {
+  if (checkMate) {
+    let side = board.sideToPlay == COLOR.WHITE ? "black" : "white"
+    let message = `${side} won by Checkmate`
+    endContainer.innerHTML = message
+    gameWrapper.style.display = "none"
+    endWrapper.style.display = "block"
+  } else {
+    let message = `Draw by Stalemate`
+    endContainer.innerHTML = message
+    gameWrapper.style.display = "none"
+    endWrapper.style.display = "block"
   }
 }

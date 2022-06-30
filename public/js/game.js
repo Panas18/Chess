@@ -1,16 +1,3 @@
-const optionWrapper = document.getElementsByClassName("option-wrapper")[0];
-const gameWrapper = document.getElementsByClassName("game-wrapper")[0];
-const resignWrapper = document.getElementsByClassName("resign--wrapper")[0];
-const endWrapper = document.getElementsByClassName("end--wrapper")[0];
-const drawWrapper = document.getElementsByClassName("draw--wrapper")[0];
-
-const rightContainer = document.getElementsByClassName("right--container")[0];
-const gameContainer = document.getElementsByClassName("game--container")[0];
-const resignContainer = document.getElementsByClassName("resign--container")[0];
-const endContainer = document.getElementsByClassName("end--container")[0];
-const drawContainer = document.getElementsByClassName("draw--container")[0];
-
-var resignBy = 2
 
 import Board from "./Board.js";
 import Timer from "./Time.js";
@@ -93,16 +80,19 @@ function humanGamePlay(timeControl) {
 	const blackTimer = new Timer(timeControl)
 	const whiteTimer = new Timer(timeControl)
 	board.visaualizeLegalMove(board)
+	if (checkMate) {
+		console.log("suck")
+	}
 	setInterval(() => {
 		if (board.sideToPlay === COLOR.BLACK) {
 			whiteTimer.pause = false
-			blackTimer.timerCycle()
+			blackTimer.timerCycle(board)
 		} else {
 			blackTimer.pause = false
-			whiteTimer.timerCycle()
+			whiteTimer.timerCycle(board)
 		}
-		whiteTimeDisplay.innerHTML = `${whiteTimer.min}:${whiteTimer.second}`
-		blackTimeDisplay.innerHTML = `${blackTimer.min}:${blackTimer.second}`
+		whiteTimeDisplay.innerHTML = `White: ${whiteTimer.min}:${whiteTimer.second}`
+		blackTimeDisplay.innerHTML = `Black: ${blackTimer.min}:${blackTimer.second}`
 	}, 1000)
 
 }

@@ -1,16 +1,33 @@
 
+const optionWrapper = document.getElementsByClassName("option-wrapper")[0];
+const gameWrapper = document.getElementsByClassName("game-wrapper")[0];
+const resignWrapper = document.getElementsByClassName("resign--wrapper")[0];
+const endWrapper = document.getElementsByClassName("end--wrapper")[0];
+const drawWrapper = document.getElementsByClassName("draw--wrapper")[0];
+
+const rightContainer = document.getElementsByClassName("right--container")[0];
+const gameContainer = document.getElementsByClassName("game--container")[0];
+const resignContainer = document.getElementsByClassName("resign--container")[0];
+const endContainer = document.getElementsByClassName("end--container")[0];
+const drawContainer = document.getElementsByClassName("draw--container")[0];
+
 const whiteTimeDisplay = document.getElementById("counter--white")
 const blackTimeDisplay = document.getElementById("counter--black")
+const squares = document.getElementsByClassName("square");
 
 const TOTAL_SQ_NUM = 120
 const BOARD_SQ_NUM = 64
 const INFINITY = 30000
+
+var checkMate = false
+var stalemate = false
 
 const FILE_ARRAY = Array(TOTAL_SQ_NUM)
 const RANK_ARRAY = Array(TOTAL_SQ_NUM)
 
 var engineFrom = 0
 var engineTo = 0
+var resignBy = 2
 
 const STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 // const STARTING_POSITION = 'r1bqkbnr/ppp2ppp/2np4/1B2p3/3PP3/8/PPP2PPP/RNBQK1NR w KQkq - 0 4'

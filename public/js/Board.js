@@ -252,7 +252,6 @@ export default class Board {
 
   getPiecesOnBoard() {
     // console.log('testing draw');
-    const squares = document.getElementsByClassName("square");
     for (let i = 0; i < squares.length; i++) {
       squares[i].style.backgroundImage = "";
     }
@@ -263,7 +262,6 @@ export default class Board {
         square.style.backgroundImage = imageUrl;
         square.style.backgroundRepeat = "no-repeat";
         square.style.backgroundSize = "100% 100%";
-        // square.style.transform="rotate(180deg)"
       });
     });
   }
