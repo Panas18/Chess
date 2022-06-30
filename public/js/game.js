@@ -1,13 +1,57 @@
-const optionContainer = document.getElementsByClassName("option--container")[0];
-const gameContainer = document.getElementsByClassName("game--container")[0];
 const optionWrapper = document.getElementsByClassName("option-wrapper")[0];
 const gameWrapper = document.getElementsByClassName("game-wrapper")[0];
+const resignWrapper = document.getElementsByClassName("resign--wrapper")[0];
+const endWrapper = document.getElementsByClassName("end--wrapper")[0];
+
+const rightContainer = document.getElementsByClassName("right--container")[0];
+const gameContainer = document.getElementsByClassName("game--container")[0];
+const resignContainer = document.getElementsByClassName("resign--container")[0];
+const endContainer = document.getElementsByClassName("end--container")[0];
+
 
 import Board from "./Board.js";
 import Timer from "./Time.js";
 const board = new Board();
 
-optionContainer.addEventListener("click", function (event) {
+function resign(side) {
+	let color = side == COLOR.WHITE ? "Black" : "White"
+	let endMessage = `${color} won by resignation`
+	endContainer.innerHTML = endMessage
+	resignWrapper.style.display = "none"
+	endWrapper.style.display = "block"
+}
+
+resignContainer.addEventListener("click", function (event) {
+	let option = event.target.id;
+	switch (option) {
+		case "yes":
+			resign(board.sideToPlay)
+			break;
+		case "no":
+			resignWrapper.style.display = "none"
+			gameWrapper.style.display = "block"
+			break;
+		default:
+			break;
+	}
+});
+
+gameContainer.addEventListener("click", function (event) {
+	let option = event.target.id;
+	switch (option) {
+		case "resign":
+			gameWrapper.style.display = "none"
+			resignWrapper.style.display = "block"
+			break;
+		case "draw":
+			console.log("draw")
+			break;
+		default:
+			break;
+	}
+});
+
+rightContainer.addEventListener("click", function (event) {
 	let playOption = parseInt(event.target.id);
 	switch (playOption) {
 		case 1:

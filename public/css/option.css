@@ -1,8 +1,9 @@
 .option-wrapper {
 	display: block;
+	/* display: none */
 }
 
-.option--container {
+.right--container {
 	display: flex;
 	margin-left: 20px;
 	width: 30vmin;
@@ -11,7 +12,6 @@
 	flex-direction: column;
 	margin-right: 20px;
 	background-color: #20201C;
-	/* display: none; */
 }
 
 
@@ -40,14 +40,6 @@
 }
 
 .game--container {
-	display: flex;
-	margin-left: 20px;
-	width: 30vmin;
-	height: 70vmin;
-	align-items: center;
-	flex-direction: column;
-	margin-right: 20px;
-	background-color: #20201C;
 	justify-content: space-evenly;
 }
 
@@ -56,11 +48,41 @@
 	font-size: 20px
 }
 
+.option:hover {
+	color: white
+}
+
 .counter {
 	color: white;
 	font-size: 20px;
 }
 
-.option:hover {
+
+.resign--wrapper {
+	display: none;
+}
+
+.resign--container {
+	justify-content: center;
 	color: white
+}
+
+.resign-option {
+	margin-top: 20px;
+	color: wheat
+}
+
+.resign-option:hover {
+	color: white
+}
+
+
+.end--wrapper {
+	display: none;
+}
+
+.end--container {
+	justify-content: center;
+	color: white;
+	align-items: center;
 }
