@@ -1,7 +1,9 @@
 #chess-container {
   outline: 2px solid rgb(17, 16, 16);
-  width: 90vmin;
-  height: 90vmin;
+  max-width: 80vmin;
+  max-height: 80vmin;
+  height: 100%;
+  width: 100%;
 }
 
 #chess--board {
@@ -21,6 +23,6 @@
   background-color: #EFEFD3
 }
 
-.inCheck {
+/* .inCheck {
   background-color: rgb(216, 129, 129) !important;
-}
+} */

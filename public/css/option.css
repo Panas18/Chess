@@ -1,0 +1,26 @@
+#option--container {
+	display: flex;
+	margin-left: 20px;
+	width: 30vmin;
+	height: 80vmin;
+	align-items: center;
+	flex-direction: column;
+	margin-right: 20px;
+	background-color: #20201C;
+}
+
+
+
+.play-option {
+	width: 80%;
+	height: 200px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	text-align: center;
+	background-color: #32302E;
+	border-radius: 7px;
+	color: white;
+	font-size: 20px;
+	margin: 20px
+}

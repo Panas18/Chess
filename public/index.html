@@ -2,24 +2,41 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chess</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/board.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chess</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/board.css">
+  <link rel="stylesheet" href="css/option.css">
 </head>
 
 <body>
+  <div class="main-container">
     <div id="chess-container">
-        <div id="chess--board"></div>
+      <div id="chess--board"></div>
     </div>
-    <script src="./js/const.js" defer></script>
-    <script src="./js/utils.js" defer></script>
-    <script src="./js/moves.js" defer></script>
-    <script src="./js/search.js" defer></script>
-    <script type="module" src="./js/Board.js" defer></script>
-    <script type="module" src="./js/game.js" defer></script>
+    <div id="option--container">
+      <div id="1" class="play-option">
+        3min
+      </div>
+      <div id="2" class="play-option">
+        5min
+      </div>
+      <div id="3" class="play-option">
+        10min
+      </div>
+      <div id="4" class="play-option">
+        Play with computer
+      </div>
+    </div>
+  </div>
+  <script src="./js/const.js" defer></script>
+  <script src="./js/utils.js" defer></script>
+  <script src="./js/moves.js" defer></script>
+  <script src="./js/search.js" defer></script>
+  <script type="module" src="./js/Board.js" defer></script>
+  <script type="module" src="./js/game.js" defer></script>
 
 </body>
 
