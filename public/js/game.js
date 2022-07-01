@@ -149,7 +149,7 @@ function resign(side) {
 }
 
 function draw() {
-	let drawMessage = "Draw by Aggrement"
+	let drawMessage = "Draw by Agreement"
 	endContainer.innerHTML = drawMessage
 	drawWrapper.style.display = "none"
 	endWrapper.style.display = "block"
