@@ -80,9 +80,6 @@ function humanGamePlay(timeControl) {
 	const blackTimer = new Timer(timeControl)
 	const whiteTimer = new Timer(timeControl)
 	board.visaualizeLegalMove(board)
-	if (checkMate) {
-		console.log("suck")
-	}
 	setInterval(() => {
 		if (board.sideToPlay === COLOR.BLACK) {
 			whiteTimer.pause = false

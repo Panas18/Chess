@@ -285,7 +285,7 @@ export default class Board {
     fromMOveSq.style.backgroundColor = "#0d7c15";
     board.toSquares.forEach((toSquare) => {
       const toMoveSq = document.getElementById(toSquare);
-      toMoveSq.style.backgroundColor = "#1ff95e";
+      toMoveSq.style.backgroundColor = "rgb(110 231 145)";
     });
   }
 
@@ -352,6 +352,17 @@ export default class Board {
         board.movePiece(board, piece, moveTo);
         board.check = false
         board.resetSqColor();
+        // if (board.sideToPlay === COLOR.BLACK) {
+        //   board.element.style.transform = "rotate(180deg)"
+        //   for (let i = 0; i < squares.length; i++) {
+        //     squares[i].style.transform = "rotate(180deg)";
+        //   }
+        // } else {
+        //   board.element.style.transform = "rotate(0deg)"
+        //   for (let i = 0; i < squares.length; i++) {
+        //     squares[i].style.transform = "rotate(0deg)";
+        //   }
+        // }
       }
     });
   }
@@ -365,5 +376,6 @@ class Square {
     this.element.setAttribute("file", file);
     this.element.classList.add(color);
     this.element.setAttribute("id", square);
+    this.element.style.border = "none"
   }
 }
