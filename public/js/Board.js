@@ -270,10 +270,12 @@ export default class Board {
     const lightSquares = document.getElementsByClassName("square light");
     for (let i = 0; i < lightSquares.length; i++) {
       lightSquares[i].style.backgroundColor = "#EFEFD2";
+      lightSquares[i].style.border = "none"
     }
     const darkSquares = document.getElementsByClassName("square dark");
     for (let i = 0; i < lightSquares.length; i++) {
       darkSquares[i].style.backgroundColor = "#779756";
+      darkSquares[i].style.border = "none"
     }
   }
 
@@ -286,6 +288,7 @@ export default class Board {
     board.toSquares.forEach((toSquare) => {
       const toMoveSq = document.getElementById(toSquare);
       toMoveSq.style.backgroundColor = "rgb(110 231 145)";
+      toMoveSq.style.border = "1px solid black"
     });
   }
 
